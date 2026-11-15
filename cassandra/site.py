@@ -27,15 +27,16 @@ def pct(x):
     return f"{100 * x:.0f}%"
 
 
-def prob_bar(p):
+def prob_bar(p, var=None):
     parts = []
     for k, cls, word in (("below", "b-below", "below"), ("near", "b-near", "near"),
                          ("above", "b-above", "above")):
         w = max(p[k] * 100, 0.5)
-        label = f"{word} {p[k] * 100:.0f}%" if p[k] >= 0.16 else f"{p[k] * 100:.0f}%"
+        label = (f"{word} {p[k] * 100:.0f}%" if p[k] >= 0.16 else
+                 f"{p[k] * 100:.0f}%" if p[k] >= 0.08 else "")
         parts.append(f'<span class="{cls}" style="width:{w:.1f}%" title="{word} normal: '
                      f'{p[k] * 100:.0f}%">{label}</span>')
-    return f'<div class="bar" role="img" aria-label="below {pct(p["below"])}, near {pct(p["near"])}, above {pct(p["above"])}">{"".join(parts)}</div>'
+    return f'<div class="bar {(var or "").lower()}" role="img" aria-label="below {pct(p["below"])}, near {pct(p["near"])}, above {pct(p["above"])}">{"".join(parts)}</div>'
 
 
 # ---------------------------------------------------------------- pieces
@@ -49,12 +50,12 @@ def verdict_block(res, chart, hist, big=True):
         size = (f"{res['change_over_record']:+.2f} °C over {res['first_year']}–{res['last_year']} "
                 f"along the trend line")
         shift = f"{res['recent_shift']:+.2f} °C"
-        normal = f"{res['normal']:.1f} °C average {season_label(res['season'])} temperature, {res['baseline'][0]}–{res['baseline'][1]}"
+        normal = f"{res['normal']:.1f} °C average {mid(season_label(res['season']))} temperature, {res['baseline'][0]}–{res['baseline'][1]}"
     else:
         size = (f"{res['change_over_record']:+.1f} percentage points of normal over "
                 f"{res['first_year']}–{res['last_year']} along the trend line")
         shift = f"{res['recent_shift']:+.0f} points of normal"
-        normal = f"{res['normal_mm']:.0f} mm in a normal {season_label(res['season'])}, {res['baseline'][0]}–{res['baseline'][1]}"
+        normal = f"{res['normal_mm']:.0f} mm in a normal {'year' if res['season'] == 'ANN' else season_label(res['season'])}, {res['baseline'][0]}–{res['baseline'][1]}"
     tag = "p"
     verdict_html = (f'<p class="verdict {v["colour"]}">{esc(v["text"])}</p>' if big else
                     f'<h3><span class="pill {v["colour"]}">{esc(v["text"])}</span></h3>')
@@ -145,7 +146,7 @@ def backtest_block(bts, place):
         if "probabilities" in fc:
             exp_cat = "above" if bt["expected_direction"] in ("warmer", "wetter") else "below"
             fc_html = (f"<p>Our seasonal forecast method, run with the same data, would have said:</p>"
-                       f"{prob_bar(fc['probabilities'])}<p class='small muted'>Climatology says 33% each. "
+                       f"{prob_bar(fc['probabilities'], ev['variable'])}<p class='small muted'>Climatology says 33% each. "
                        f"It gave {pct(fc['probabilities'][exp_cat])} to <em>{exp_cat} normal</em>.</p>")
         missing = ("" if bt["observed"]["visibility"] != "not visible" else
                    "<p class='small'><strong>Data check:</strong> this event does not stand out in the NASA "
@@ -190,7 +191,7 @@ def forecast_block(locked, hind, repo_url, last10=None):
                 rows.append(f"<tr><td>{d['season']} {d['target_year']}<br><span class='small muted'>"
                             f"{esc(d['season_months'])}</span></td><td>{VAR_WORD[var]}<br><span class='small muted'>"
                             f"normal: {edges[0]:.1f}–{edges[1]:.1f} {unit}</span></td>"
-                            f"<td>{prob_bar(fc['probabilities'])}</td><td>{status}</td></tr>")
+                            f"<td>{prob_bar(fc['probabilities'], var)}</td><td>{status}</td></tr>")
             if g.get("committed"):
                 lock = (f"Locked in commit <a href='{repo_url}/commit/{g['commit']}'><code>{g['commit'][:10]}</code></a> "
                         f"at {esc(g['commit_time'])}"
@@ -211,7 +212,7 @@ def forecast_block(locked, hind, repo_url, last10=None):
     if last10:
         h10 = last10
         rows10 = "".join(
-            f"<tr><td>{esc(h10['season'])} {r['year']}</td><td>{prob_bar(r['probabilities'])}</td>"
+            f"<tr><td>{esc(h10['season'])} {r['year']}</td><td>{prob_bar(r['probabilities'], h10['variable'])}</td>"
             f"<td><strong>{r['observed']}</strong> ({r['value']:.1f} {h10['unit']})</td>"
             f"<td>{'✓' if max(r['probabilities'], key=r['probabilities'].get) == r['observed'] else '✗'}</td></tr>"
             for r in h10["rows"])

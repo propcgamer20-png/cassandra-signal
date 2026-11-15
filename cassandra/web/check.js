@@ -141,7 +141,7 @@
         (nearEdge ? 'cut-off · what happened next →' : 'what happened next →') + '</text>';
       s += '<path class="after" d="' + path([a.years[a.years.length - 1]].concat(after.years), [a.plot[a.plot.length - 1]].concat(after.plot)) + '"/>';
     }
-    s += '<path class="real ' + r.verdict.colour + '" d="' + path(a.years, a.plot) + '"/>';
+    s += '<path class="real ' + r.verdict.colour + '" pathLength="1" d="' + path(a.years, a.plot) + '"/>';
     return s + '</svg>';
   }
   function histChart(r) {
@@ -156,8 +156,8 @@
     s += '<text class="tick" x="' + W / 2 + '" y="' + (H - 8) + '" text-anchor="middle">Trend per decade in each imaginary history (' + (r.variable === 'T' ? '°C' : 'SPI units') + '). Bold line: the real trend.</text>';
     return s + '</svg>';
   }
-  function bar(p) { return '<div class="bar">' + ['below', 'near', 'above'].map(function (k) {
-    return '<span class="b-' + k + '" style="width:' + Math.max(p[k] * 100, 0.5).toFixed(1) + '%">' + (p[k] >= 0.16 ? k + ' ' : '') + Math.round(p[k] * 100) + '%</span>'; }).join('') + '</div>'; }
+  function bar(p, v) { return '<div class="bar ' + (v || '').toLowerCase() + '">' + ['below', 'near', 'above'].map(function (k) {
+    return '<span class="b-' + k + '" style="width:' + Math.max(p[k] * 100, 0.5).toFixed(1) + '%" title="' + k + ' normal: ' + Math.round(p[k] * 100) + '%">' + (p[k] < 0.08 ? '' : (p[k] >= 0.16 ? k + ' ' : '') + Math.round(p[k] * 100) + '%') + '</span>'; }).join('') + '</div>'; }
 
   // ------------------------------------------------------------ results
   function sentence(r) {
@@ -216,7 +216,7 @@
     // forecast
     html += '<h3>' + (cut ? 'What our forecast method would have said for ' : 'Chances for the next ') + esc(E.seasonLabel(r.season)) + ' (' + (fc && fc.target_year || (r.last_year + 1)) + ')</h3>';
     if (fc && !fc.error) {
-      html += bar(fc.probabilities) + '<p class="small muted">Compared with 33% each if the climate were not shifting. Normal = ' + fc.tercile_edges[0].toFixed(1) + '–' + fc.tercile_edges[1].toFixed(1) + ' ' + fc.unit + '.' +
+      html += bar(fc.probabilities, r.variable) + '<p class="small muted">Compared with 33% each if the climate were not shifting. Normal = ' + fc.tercile_edges[0].toFixed(1) + '–' + fc.tercile_edges[1].toFixed(1) + ' ' + fc.unit + '.' +
         (fc.observed ? ' <strong>What actually happened: ' + fc.observed + ' normal</strong> (' + fc.observed_value.toFixed(1) + ' ' + fc.unit + '); the method gave that ' + pct(fc.probabilities[fc.observed]) + '.' : '') +
         (cut ? '' : ' This forecast is computed now, in your browser; it is not locked. Locked, fingerprinted forecasts exist for our demo places.') + '</p>';
     } else html += '<p class="small">' + esc(fc ? fc.error : 'Not available.') + '</p>';
