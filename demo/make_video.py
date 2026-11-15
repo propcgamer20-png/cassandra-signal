@@ -175,7 +175,7 @@ def frame(fig, t):
                      color=COLOURS[cols[pl["T"]["verdict"]]], alpha=a)
             fig.text(x + 0.255, y - 0.045, f"rain: {names[pl['P']['verdict']]}", fontsize=13,
                      color=COLOURS[cols[pl["P"]["verdict"]]], alpha=a)
-        fig.text(0.5, 0.1, "propcgamer20-png.github.io/cassandra-signal", fontsize=18,
+        fig.text(0.5, 0.1, "cassandra-signal-climate.vercel.app", fontsize=18,
                  ha="center", color=COLOURS["red"])
 
 

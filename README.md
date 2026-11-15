@@ -10,7 +10,7 @@ data available beforehand, and it locks in seasonal forecasts before each season
 In Greek myth, Cassandra gave true warnings that nobody believed. This project tries to make warnings believable by
 putting the evidence on trial and publishing predictions before the outcome is known.
 
-- **Live site:** https://propcgamer20-png.github.io/cassandra-signal/
+- **Live site:** https://cassandra-signal-climate.vercel.app/ (mirror: https://propcgamer20-png.github.io/cassandra-signal/)
 - **Demo video (30 s):** [demo/cassandra-signal-demo.mp4](demo/cassandra-signal-demo.mp4)
 - Built for the NASA Space Apps Challenge. Not affiliated with or endorsed by NASA.
 
@@ -33,7 +33,7 @@ natural variation before the event, and we report that rather than hide it.
 
 **Is the test honest?** On 1,000 made-up 45-year series with no trend at all, the method flagged 5.6% (white
 noise), 4.8% (AR(1), φ = 0.3), 6.0% (AR(1), φ = 0.6) and 1.5% (skewed, rain-like noise) at p < 0.05. A fair test
-should flag about 5%. See [the method page](https://propcgamer20-png.github.io/cassandra-signal/method/#false-alarms).
+should flag about 5%. See [the method page](https://cassandra-signal-climate.vercel.app/method/#false-alarms).
 
 ## The method in plain words
 
@@ -93,8 +93,11 @@ source link). Then run `python build.py --places places.csv` and commit `data/ra
 
 ### Deployment
 
-[.github/workflows/site.yml](.github/workflows/site.yml) runs the tests, builds the site and deploys it to GitHub
-Pages on every push. On the 10th of each month it also refreshes the NASA data, locks the next season's forecasts when
+[.github/workflows/site.yml](.github/workflows/site.yml) runs the tests, builds the site and deploys it on every
+push: to GitHub Pages directly, and to Vercel by pushing the finished site to the `vercel-site` branch, which is the
+Vercel project's production branch ([vercel.json](vercel.json) turns off Vercel deployments of `main`). The site is
+always built by the Action, because the forecast proof needs the full git history, which Vercel's own builds don't
+have. On the 10th of each month it also refreshes the NASA data, locks the next season's forecasts when
 the season starts within 25 days, commits them, and scores any finished seasons. No server, no login, no tracking.
 
 ## Data and citations
