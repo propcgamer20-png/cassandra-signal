@@ -11,3 +11,10 @@ garissa,2021,P,OND,drought,"2020-2023 Horn of Africa drought (failed Oct-Dec 202
 niamey,2024,T,MAM,heat,"Sahel heatwave, late March to early April 2024",https://www.worldweatherattribution.org/extreme-sahel-heatwave-that-hit-highly-vulnerable-population-at-the-end-of-ramadan-would-not-have-occurred-without-climate-change/
 wagga-wagga,2006,P,ANN,drought,"Millennium drought: 2006, driest year on record for much of Australia",https://en.wikipedia.org/wiki/2000s_Australian_drought
 wagga-wagga,2020,T,DJF,heat,"Black Summer heat, Dec 2019 to Feb 2020",https://en.wikipedia.org/wiki/2019%E2%80%9320_Australian_bushfire_season
+latur,2015,P,JJAS,drought,"2015 monsoon, before the 2016 Latur water-train crisis",https://www.business-standard.com/article/current-affairs/water-lifeline-reaches-latur-116041200568_1.html
+fresno,2014,P,NDJFM,drought,"2011-2017 California drought (winter 2013-14)",https://en.wikipedia.org/wiki/2011%E2%80%932017_California_drought
+sao-paulo,2014,P,ANN,drought,"São Paulo water crisis, 2014",https://en.wikipedia.org/wiki/2014%E2%80%932017_Brazilian_drought
+sydney,2019,P,ANN,drought,"Eastern Australia drought, 2017-2019",https://en.wikipedia.org/wiki/Drought_in_Australia
+nairobi,2021,P,OND,drought,"2020-2023 Horn of Africa drought (failed Oct-Dec 2021 rains)",https://en.wikipedia.org/wiki/Horn_of_Africa_drought_(2020%E2%80%932023)
+london,2022,T,JJA,heat,"2022 UK heatwave, first 40 °C on record",https://en.wikipedia.org/wiki/2022_United_Kingdom_heatwaves
+london,2022,P,JJA,drought,2022 European drought,https://en.wikipedia.org/wiki/2022_European_drought

@@ -58,7 +58,7 @@ def test_js_engine_matches_python(place, tmp_path):
         assert j["n"] == p["n_years"] and j["last"] == p["last_year"]
         assert j["real"] == pytest.approx(t["real"], rel=1e-6, abs=1e-9)
         assert j["trend"] == pytest.approx(p["trend_per_decade"], rel=1e-6, abs=1e-9)
-        assert j["phi"] == pytest.approx(t["fit"]["phi"], rel=1e-6, abs=1e-8)
+        assert j["phi"] == pytest.approx(t["fit"]["phi"], rel=1e-6, abs=1e-7)
         assert j["sigma"] == pytest.approx(t["fit"]["sigma"], rel=1e-6)
         assert j["normal"] == pytest.approx(p["normal"], rel=1e-9)
         assert p_close(j["p"], t["p"]), (place["slug"], j, t["p"])

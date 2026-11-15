@@ -148,7 +148,7 @@
     var i = LETTERS.indexOf(s); if (i < 0 || i > 11 || s.length > 12) throw new Error('unknown season ' + s);
     var out = []; for (var k = 0; k < s.length; k++) out.push((i + k) % 12 + 1); return out;
   }
-  function seasonLabel(s) { if (s.toUpperCase() === 'ANN') return 'Calendar year';
+  function seasonLabel(s) { if (s.toUpperCase() === 'ANN') return 'Annual';
     var m = seasonMonths(s); return MONTHS[m[0] - 1] + '-' + MONTHS[m[m.length - 1] - 1]; }
   function seasonStart(s, year) { var m = seasonMonths(s); return [m[m.length - 1] < m[0] ? year - 1 : year, m[0]]; }
   function monthBefore(ym) { return ym[1] === 1 ? [ym[0] - 1, 12] : [ym[0], ym[1] - 1]; }
@@ -330,6 +330,11 @@
       var ay = [], av = [];
       after.years.forEach(function (yy, i) { if (yy > out.last_year) { ay.push(yy); av.push(after.values[i]); } });
       out.after = { years: ay, plot: av };
+      if (ay.length) {               // how rare was the very next season, against histories built before it?
+        var below = 0, tot = 0;
+        band.forEach(function (row) { row.forEach(function (v) { tot++; if (v < av[0]) below++; }); });
+        out.after.first = { year: ay[0], value: av[0], pct_below: 100 * below / tot };
+      }
     }
     return out;
   }

@@ -17,19 +17,25 @@ putting the evidence on trial and publishing predictions before the outcome is k
 
 ## Current results
 
-| Place | Temperature | Rain | Backtests: would it have warned? |
+| Place | Temperature | Rain | Backtests: would the signal have warned? |
 |---|---|---|---|
-| Mumbai, India | Mar–May: no alibi (+0.25 °C/decade) | Jun–Sep: probably real (+10.2 points of normal/decade, wetter) | 2009 monsoon failure: no (barely shows in the data) |
-| Cape Town water supply, South Africa | Dec–Feb: not yet (+0.12 °C/decade) | Apr–Sep: not yet | 'Day Zero' crisis, 2017: no |
-| Paris, France | Jun–Aug: very unlikely natural (+0.49 °C/decade) | Jun–Aug: not yet | 2003 heat wave: no · 2022 drought: no |
-| Sacramento, California, USA | Jun–Aug: not yet (+0.13 °C/decade) | Nov–Mar: not yet | 2013–14 drought winter: no |
-| Austin, Texas, USA | Jun–Aug: probably real (+0.34 °C/decade) | Year: not yet | 2011 heat: no · 2011 drought: no |
-| Garissa, Kenya | Year: probably real (+0.21 °C/decade) | Oct–Dec: not yet | 2011 long rains: no · Oct–Dec 2021: no (barely shows in the data) |
-| Niamey, Niger | Mar–May: no alibi (+0.39 °C/decade) | Jul–Sep: very unlikely natural (wetter) | 2024 Sahel heatwave: **warned** |
-| Wagga Wagga, Australia | Dec–Feb: not yet (+0.29 °C/decade) | Year: not yet | 2006 drought: no · Black Summer 2019–20: **warned** |
+| Mumbai, India | Mar-May: no alibi (+0.25 °C/decade) | Jun-Sep: probably real (+10.2 points of normal/decade) | 2009 monsoon failure; Mumbai cut water supply: no (barely shows in the data) |
+| Latur (Marathwada), India | Annual: not yet (+0.08 °C/decade) | Jun-Sep: not yet (−1.1 points of normal/decade) | 2015 monsoon, before the 2016 Latur water-train crisis: no |
+| Cape Town water supply, South Africa | Dec-Feb: not yet (+0.12 °C/decade) | Apr-Sep: not yet (+0.1 points of normal/decade) | 'Day Zero' water crisis, worst in mid-2017 to mid-2018: no |
+| Fresno, California, USA | Annual: very unlikely natural (+0.35 °C/decade) | Nov-Mar: not yet (−2.8 points of normal/decade) | 2011-2017 California drought (winter 2013-14): no |
+| São Paulo, Brazil | Annual: no alibi (+0.39 °C/decade) | Annual: no alibi (−9.7 points of normal/decade) | São Paulo water crisis, 2014: **warned** |
+| Sydney, Australia | Annual: very unlikely natural (+0.31 °C/decade) | Annual: not yet (−5.1 points of normal/decade) | Eastern Australia drought, 2017-2019: no |
+| Nairobi, Kenya | Annual: no alibi (+0.26 °C/decade) | Oct-Dec: not yet (−6.1 points of normal/decade) | 2020-2023 Horn of Africa drought (failed Oct-Dec 2021 rains): no |
+| London, United Kingdom | Annual: no alibi (+0.39 °C/decade) | Jun-Aug: not yet (+2.1 points of normal/decade) | 2022 UK heatwave, first 40 °C on record: no; 2022 European drought: no |
+| Paris, France | Jun-Aug: very unlikely natural (+0.49 °C/decade) | Jun-Aug: not yet (+0.6 points of normal/decade) | 2003 European heat wave: no; 2022 European drought: no |
+| Sacramento, California, USA | Jun-Aug: not yet (+0.13 °C/decade) | Nov-Mar: not yet (−3.2 points of normal/decade) | 2011-2017 California drought (winter 2013-14): no |
+| Austin, Texas, USA | Jun-Aug: probably real (+0.34 °C/decade) | Annual: not yet (−3.6 points of normal/decade) | 2011 Texas heat wave and drought: no; 2011 Texas drought: no |
+| Garissa, Kenya | Annual: probably real (+0.21 °C/decade) | Oct-Dec: not yet (−1.2 points of normal/decade) | 2011 East Africa drought (failed 2011 long rains): no; 2020-2023 Horn of Africa drought (failed Oct-Dec 2021 rains): no (barely shows in the data) |
+| Niamey, Niger | Mar-May: no alibi (+0.39 °C/decade) | Jul-Sep: very unlikely natural (+7.2 points of normal/decade) | Sahel heatwave, late March to early April 2024: **warned** |
+| Wagga Wagga, Australia | Dec-Feb: not yet (+0.29 °C/decade) | Annual: not yet (−3.7 points of normal/decade) | Millennium drought: 2006, driest year on record for much of Australia: no; Black Summer heat, Dec 2019 to Feb 2020: **warned** |
 
 Results as of the data cut-off of September 2026. The site is rebuilt from the data, so it is the source of truth;
-this table is a snapshot. Most backtests say "no": a 20–30 year record is often too short to separate a change from
+this table is a snapshot. The first eight places are the ones in our demo video. Most backtests say "no": a 20–30 year record is often too short to separate a change from
 natural variation before the event, and we report that rather than hide it.
 
 **Is the test honest?** On 1,000 made-up 45-year series with no trend at all, the method flagged 5.6% (white
@@ -144,7 +150,7 @@ No NASA logos or branding are used.
 - **Rain is noisier than temperature**, so expect more "not yet" verdicts for rain.
 - **The noise model is a model.** Very slow natural swings (multi-decade ocean cycles) may be longer than the record
   and are not fully represented.
-- **Many tests.** With 16 series, about one could be amber by chance alone.
+- **Many tests.** With 28 series, one or two could be amber by chance alone.
 - **Forecasts are simple** (climatology shifted along the trend). Hindcast skill is positive where there is a strong
   trend and about zero or slightly negative where there isn't; the cards show both.
 

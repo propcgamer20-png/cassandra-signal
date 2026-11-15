@@ -164,6 +164,16 @@
     if (r.verdict.key === 'not_yet') return what + ' has a trend of ' + ch + ' since ' + r.first_year + ' (pointing ' + r.direction + '), but natural variation alone can produce a trend that size.';
     return what + ' is ' + ((r.direction === 'warmer' || r.direction === 'wetter') ? 'rising' : 'falling') + ': ' + ch + ' since ' + r.first_year + '.';
   }
+  function floorPct(x) { return x >= 99 ? (Math.floor(x * 10) / 10).toFixed(1) : String(Math.floor(x)); }
+  function nextSeason(r) {
+    var f = r.after && r.after.first; if (!f) return '';
+    var high = f.pct_below >= 50, T = r.variable === 'T';
+    var word = high ? (T ? 'hotter' : 'wetter') : (T ? 'colder' : 'drier'), share = high ? f.pct_below : 100 - f.pct_below;
+    var val = T ? signed(f.value, 2) + ' °C against the ' + r.baseline[0] + '–' + r.baseline[1] + ' average' : Math.round(f.value) + '% of normal rain';
+    return '<div class="box"><strong>What happened next:</strong> ' + esc(E.seasonLabel(r.season)) + ' ' + f.year + ' came in at ' + val +
+      ', ' + word + ' than <strong>' + floorPct(share) + '%</strong> of the years in the 1,000 natural histories built only from the data up to ' +
+      r.last_year + '.</div>';
+  }
   function planet(r) {
     if (!gistemp || r.variable !== 'T') return '';
     var g = gistemp.global.filter(function (d) { return d[0] >= r.first_year && d[0] <= Math.max(r.last_year, 0); });
@@ -192,6 +202,7 @@
       '<div class="chartbox">' + lineChart(r) + '<p class="legend small"><span class="key real-key ' + r.verdict.colour + '"></span>real record ' +
       '<span class="key band-key"></span>where 90% of the 1,000 imaginary histories fall <span class="key trend-key"></span>trend' +
       (r.after && r.after.years.length ? ' <span class="key after-key"></span>what happened after the cut-off (not used in the trial)' : '') + '</p></div>' +
+      nextSeason(r) +
       '<div class="chartbox">' + histChart(r) + '</div>' +
       '<dl class="facts"><div><dt>Trend (Sen\'s slope)</dt><dd>' + (r.variable === 'T' ? signed(r.trend_per_decade, 2) + ' °C per decade' : signed(r.trend_per_decade, 1) + ' points of normal per decade') + '</dd></div>' +
       '<div><dt>Size of the change</dt><dd>' + (r.variable === 'T' ? signed(r.change_over_record, 2) + ' °C' : signed(r.change_over_record, 1) + ' points') + ' over ' + r.first_year + '–' + r.last_year + '</dd></div>' +

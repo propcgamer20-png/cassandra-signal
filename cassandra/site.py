@@ -1,6 +1,8 @@
 """Page bodies for the static site. Every number comes from the analysis dicts."""
 from __future__ import annotations
 
+import math
+
 from .climate import season_label
 from .render import change_short, change_words, esc, headline_sub, outside_words, p_words
 
@@ -9,6 +11,11 @@ SHORT_VERDICT = {"no_alibi": "natural variation has no alibi",
                  "probable": "probably a real change",
                  "not_yet": "not yet distinguishable from natural variation"}
 VAR_WORD = {"T": "temperature", "P": "rain"}
+
+
+def mid(label):
+    """A season label for the middle of a sentence ('Annual' -> 'annual')."""
+    return "annual" if label == "Annual" else label
 
 
 def coords(place):
@@ -76,7 +83,7 @@ def verdict_block(res, chart, hist, big=True):
 def context_block(ctx, res_t):
     return f"""
 <h2 id="planet">Your place vs the planet</h2>
-<p>Here, {esc(season_label(res_t['season']))} temperature has changed by <strong>{esc(change_short(res_t))}</strong>
+<p>Here, {esc(mid(season_label(res_t['season'])))} temperature has changed by <strong>{esc(change_short(res_t))}</strong>
 since {res_t['first_year']} (NASA POWER). Over the same years the whole planet warmed by
 <strong>{ctx['global_trend']:+.2f} °C/decade</strong> and the {esc(ctx['zone_label'])} latitude band by
 <strong>{ctx['zone_trend']:+.2f} °C/decade</strong> (NASA GISTEMP v4, annual means, {ctx['first']}–{ctx['last']}).
@@ -93,7 +100,7 @@ def warned_words(bt):
     if res["verdict"]["key"] != "not_yet":
         return ("No", f"The record showed a significant change, but towards {res['direction']}, "
                       f"the opposite of this event.")
-    return ("No", f"Before the event the {season_label(res['season'])} record was not yet distinguishable "
+    return ("No", f"Before the event the {mid(season_label(res['season']))} record was not yet distinguishable "
                   f"from natural variation (the trend pointed {res['direction']}, {p_words(res['test']['p'])}).")
 
 
@@ -105,9 +112,16 @@ def observed_words(bt):
     else:
         s = f"{o['pct_of_normal']:.0f}% of normal rain ({o['total_mm']:.0f} mm, SPI {o['spi']:+.1f})"
         order = "driest" if bt["expected_direction"] == "drier" else "wettest"
-    rank = (f"the {order} of the {o['record_years'] + 1} seasons since {res['first_year']}"
+    unit = "years" if res["season"] == "ANN" else "seasons"
+    rank = (f"the {order} of the {o['record_years'] + 1} {unit} since {res['first_year']}"
             if o["rank_in_record"] == 1 else
             f"number {o['rank_in_record']} of {o['record_years'] + 1} by that measure")
+    if "more_extreme_than_pct" in o:
+        word = {"warmer": "hotter", "drier": "drier", "wetter": "wetter", "cooler": "colder"}[bt["expected_direction"]]
+        x = o["more_extreme_than_pct"]
+        shown = f"{math.floor(x * 10) / 10:.1f}" if x >= 99 else f"{math.floor(x):.0f}"
+        rank += (f"; {word} than {shown}% of the years in 1,000 natural histories "
+                 f"built only from the data before it")
     vis = {"extreme": "It stands out as extreme in this dataset",
            "unusual": "It shows as unusual, though not extreme, in this dataset",
            "not visible": "It barely shows in this dataset at this point"}[o["visibility"]]
@@ -149,7 +163,7 @@ def backtest_block(bts, place):
     return "\n".join(out)
 
 
-def forecast_block(locked, hind, repo_url):
+def forecast_block(locked, hind, repo_url, last10=None):
     out = ['<h2 id="forecasts">Forecast track record</h2>',
            '<p>Before a season starts we publish the chance that it will be <em>below</em>, <em>near</em> or '
            '<em>above</em> normal (the middle third of 1981–2010). Each forecast is a file committed to the '
@@ -194,6 +208,20 @@ def forecast_block(locked, hind, repo_url):
                    "<code>sha256sum</code> (Linux/macOS) or <code>certutil -hashfile FILE SHA256</code> (Windows).</p>")
     else:
         out.append("<p>No locked forecasts yet for this place.</p>")
+    if last10:
+        h10 = last10
+        rows10 = "".join(
+            f"<tr><td>{esc(h10['season'])} {r['year']}</td><td>{prob_bar(r['probabilities'])}</td>"
+            f"<td><strong>{r['observed']}</strong> ({r['value']:.1f} {h10['unit']})</td>"
+            f"<td>{'✓' if max(r['probabilities'], key=r['probabilities'].get) == r['observed'] else '✗'}</td></tr>"
+            for r in h10["rows"])
+        out.append(f"<h3>Track record: the last {len(h10['rows'])} {esc(h10['season_words'])} seasons</h3>"
+                   f"<p class='small'>The same {VAR_WORD[h10['variable']]} forecast method, re-run for each past season "
+                   f"using only the data from before it (hindcasts, not locked). Its most likely category came true "
+                   f"in <strong>{h10['hits']} of {len(h10['rows'])}</strong>; skill vs always saying 33/33/33: "
+                   f"<strong>{h10['rpss'] * 100:+.0f}%</strong>.</p><div class='scroll'><table><thead><tr><th>Season</th>"
+                   f"<th>Forecast</th><th>What happened</th><th>Most likely right?</th></tr></thead><tbody>{rows10}"
+                   f"</tbody></table></div>")
     hrows = []
     for var, h in hind.items():
         if not h.get("n"):
@@ -212,7 +240,7 @@ def forecast_block(locked, hind, repo_url):
     return "\n".join(out)
 
 
-def place_body(place, primary, secondary, ctx, bts, locked, hind, repo_url, power_url):
+def place_body(place, primary, secondary, ctx, bts, locked, hind, repo_url, power_url, last10=None):
     p_var = primary["variable"]
     return f"""
 <p class="muted small" style="margin-top:0">{coords(place)} · judged on {esc(season_label(primary['season']))} {primary['variable_name']}</p>
@@ -225,7 +253,7 @@ def place_body(place, primary, secondary, ctx, bts, locked, hind, repo_url, powe
 {verdict_block(secondary, f"chart-{secondary['variable']}.png", f"hist-{secondary['variable']}.png", big=False)}
 {context_block(ctx, primary if p_var == 'T' else secondary)}
 {backtest_block(bts, place)}
-{forecast_block(locked, hind, repo_url)}
+{forecast_block(locked, hind, repo_url, last10)}
 <h2 id="sources">Sources</h2>
 <ul>
 <li>NASA POWER monthly point data for this place:

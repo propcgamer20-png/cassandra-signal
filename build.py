@@ -100,15 +100,27 @@ def false_alarms(cache: Path, quick: bool):
     return rows
 
 
+def rarity_words(x):
+    """99.9% stays 99.9% (never rounded up to 100%); below 99 whole numbers are enough."""
+    import math
+    return f"{math.floor(x * 10) / 10:.1f}%" if x >= 99 else f"{math.floor(x):.0f}%"
+
+
 def card_lines(primary, ctx, res_t, bts, locked, hind):
-    lines = [("Planet", f"Here {season_label(res_t['season'])} temperature {R.change_short(res_t)}; "
+    lines = [("Planet", f"Here {S.mid(season_label(res_t['season']))} temperature {R.change_short(res_t)}; "
                         f"whole planet {ctx['global_trend']:+.2f} °C/decade (GISTEMP, "
                         f"{ctx['first']}–{ctx['last']})")]
     if bts:
         bt = bts[0]
         ev, res = bt["event"], bt["result"]
-        lines.append(("Backtest", f"{ev['name']}: {'WARNED' if bt['warned'] else 'no warning'} "
-                                  f"using data to {bt['cutoff']} ({S.SHORT_VERDICT[res['verdict']['key']]})"))
+        o = bt["observed"]
+        word = {"warmer": "hotter", "drier": "drier", "wetter": "wetter", "cooler": "colder"}[bt["expected_direction"]]
+        what = (f"{o['pct_of_normal']:.0f}% of normal rain" if ev["variable"] == "P"
+                else f"{o['anomaly']:+.1f} °C")
+        name = ev["name"] if str(ev["year"]) in ev["name"] else f"{ev['name']} ({ev['year']})"
+        lines.append(("Backtest", f"{name}: {what}, {word} than "
+                                  f"{rarity_words(o.get('more_extreme_than_pct', float('nan')))} of natural years; signal at the time: "
+                                  f"{'warned' if bt['warned'] else 'no warning'}"))
     scored = [s for lf in locked for s in lf["scores"].values() if s.get("status") == "scored"]
     pending = [s for lf in locked for s in lf["scores"].values() if s.get("status") == "pending"]
     h = hind.get(primary["variable"], {})
@@ -193,6 +205,11 @@ def main(argv=None):
                 n_pending += s["status"] == "pending"
                 n_scored += s["status"] == "scored"
 
+        last10 = None
+        if locked:
+            d = locked[-1]["doc"]
+            var10 = "T" if "probabilities" in d["variables"].get("T", {}) else "P"
+            last10 = F.last_seasons(m, var10, d["season"])
         pdir = out / "place" / slug
         pdir.mkdir(parents=True)
         for var, r in res.items():
@@ -202,13 +219,13 @@ def main(argv=None):
         R.card_png(place, primary, card_lines(primary, ctx, res["T"], bts, locked, hind),
                    pdir / "card.png", url.replace("https://", "").rstrip("/"))
         power_url = POWER_URL.format(lat=place["lat"], lon=place["lon"], year=m.year.max())
-        body = S.place_body(place, primary, secondary, ctx, bts, locked, hind, args.repo_url, power_url)
+        body = S.place_body(place, primary, secondary, ctx, bts, locked, hind, args.repo_url, power_url, last10)
         desc = f"{primary['verdict']['text']}. {R.headline_sub(primary)} {R.outside_words(primary)}."
         html = R.page(f"{place['name']}: Cassandra Signal", body, description=desc,
                       og_image=url + "card.png", url=url).replace("{BUILD_INFO}", build_info)
         (pdir / "index.html").write_text(html, encoding="utf-8", newline="\n")
         data = {"place": place, "primary": place["primary"], "results": res, "gistemp": ctx,
-                "backtests": bts, "hindcasts": hind,
+                "backtests": bts, "hindcasts": hind, "last_seasons": last10,
                 "locked_forecasts": [{k: v for k, v in lf.items()} for lf in locked],
                 "seed_base": BASE_SEED, "histories": N_HISTORIES}
         (pdir / "data.json").write_text(json.dumps(jsonable(data), indent=1, ensure_ascii=False) + "\n",

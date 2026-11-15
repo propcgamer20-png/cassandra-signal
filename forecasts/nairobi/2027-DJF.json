@@ -1,0 +1,63 @@
+{
+  "schema": "cassandra-signal/forecast/v1",
+  "place": {
+    "slug": "nairobi",
+    "name": "Nairobi, Kenya",
+    "lat": -1.286,
+    "lon": 36.817
+  },
+  "season": "DJF",
+  "season_months": "Dec-Feb",
+  "target_year": 2027,
+  "season_starts": "2026-12-01",
+  "issued_at_utc": "2026-11-15T19:48:15Z",
+  "categories": "below / near / above the middle third of 1981-2010 seasons",
+  "method": "Trend-shifted climatology: tercile edges from the 1981-2010 seasons; the season's value is predicted from the Sen's-slope trend line fitted to all complete seasons before the cut-off, with a normal spread equal to the scatter around that line (prediction-interval widened). Precipitation is handled as SPI (gamma fit on 1981-2010). Each category is kept at 2% or more.",
+  "data": "NASA POWER monthly T2M and PRECTOTCORR",
+  "variables": {
+    "T": {
+      "variable": "T",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+        "below": 0.02,
+        "near": 0.097,
+        "above": 0.883
+      },
+      "tercile_edges": [
+        19.807,
+        20.417
+      ],
+      "unit": "°C",
+      "baseline": [
+        1982,
+        2010
+      ],
+      "trend_centre": 21.192,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+    },
+    "P": {
+      "variable": "P",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+        "below": 0.513,
+        "near": 0.268,
+        "above": 0.219
+      },
+      "tercile_edges": [
+        111.807,
+        174.0
+      ],
+      "unit": "mm",
+      "baseline": [
+        1982,
+        2010
+      ],
+      "trend_centre": 109.511,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+    }
+  }
+}

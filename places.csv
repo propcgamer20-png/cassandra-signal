@@ -1,9 +1,15 @@
 slug,name,lat,lon,t_season,p_season,primary,notes
 mumbai,"Mumbai, India",19.076,72.878,MAM,JJAS,T,Coastal megacity; pre-monsoon heat (Mar-May) and the Jun-Sep monsoon that fills its lakes.
+latur,"Latur (Marathwada), India",18.408,76.576,ANN,JJAS,T,Inland farm district of Maharashtra that ran out of water in 2016 and was supplied by train.
 cape-town,"Cape Town water supply, South Africa",-34.08,19.28,DJF,AMJJAS,P,"Theewaterskloof Dam catchment, the largest source of Cape Town's water, about 70 km east of the city. The POWER cell over the city itself shows no 2017 drought, so we judge the catchment that ran dry."
+fresno,"Fresno, California, USA",36.737,-119.787,ANN,NDJFM,T,Heart of California's San Joaquin Valley farm belt; almost all rain falls Nov-Mar.
+sao-paulo,"São Paulo, Brazil",-23.551,-46.633,ANN,ANN,T,Megacity of 22 million whose main reservoir system nearly ran dry in the 2014-2015 water crisis.
+sydney,"Sydney, Australia",-33.869,151.209,ANN,ANN,T,Australia's largest city; the 2017-2019 drought and the 2019-20 Black Summer fires hit its region.
+nairobi,"Nairobi, Kenya",-1.286,36.817,ANN,OND,T,"East African highland capital; two rainy seasons a year, including the Oct-Dec short rains."
+london,"London, United Kingdom",51.507,-0.128,ANN,JJA,T,Mild maritime climate that reached 40 °C for the first time in July 2022.
 paris,"Paris, France",48.857,2.352,JJA,JJA,T,Temperate European capital; summer heat and summer rain.
 sacramento,"Sacramento, California, USA",38.582,-121.494,JJA,NDJFM,P,Central Valley farm country; almost all rain falls Nov-Mar.
 austin,"Austin, Texas, USA",30.267,-97.743,JJA,ANN,T,Hot humid subtropics; 2011 brought the hottest summer and driest year on record in Texas.
 garissa,"Garissa, Kenya",-0.453,39.646,ANN,OND,P,Pastoral drylands of the Horn of Africa; two short rainy seasons a year.
-niamey,"Niamey, Niger",13.512,2.112,MAM,JAS,T,"Sahel city; the hottest months come before the Jul-Sep rains."
+niamey,"Niamey, Niger",13.512,2.112,MAM,JAS,T,Sahel city; the hottest months come before the Jul-Sep rains.
 wagga-wagga,"Wagga Wagga, Australia",-35.118,147.369,DJF,ANN,P,Murray-Darling Basin wheat and sheep country.

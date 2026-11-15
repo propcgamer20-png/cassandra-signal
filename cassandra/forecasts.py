@@ -238,3 +238,19 @@ def score_locked(path: Path, monthly: pd.DataFrame) -> dict:
                               "brier": brier(fc["probabilities"], obs),
                               "brier_clim": brier(CLIMATOLOGY, obs)}
     return out
+
+
+def last_seasons(monthly: pd.DataFrame, var: str, season: str, n: int = 10) -> dict | None:
+    """Hindcasts for the last n complete seasons, with the observed value,
+    for the 'track record' table next to a locked forecast."""
+    h = hindcasts(monthly, var, season)
+    if not h.get("n"):
+        return None
+    rows = h["rows"][-n:]
+    vals = _season_values(monthly, var, season)
+    for r in rows:
+        r["value"] = float(vals.loc[r["year"]])
+    hits = sum(max(r["probabilities"], key=r["probabilities"].get) == r["observed"] for r in rows)
+    return {"variable": var, "season": season, "season_words": C.season_label(season),
+            "unit": "°C" if var == "T" else "mm", "rows": rows, "hits": int(hits),
+            "rpss": skill([r["rps"] for r in rows], [r["rps_clim"] for r in rows])}

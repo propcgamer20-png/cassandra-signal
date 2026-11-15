@@ -33,7 +33,7 @@ def season_months(season: str) -> list[int]:
 def season_label(season: str) -> str:
     """Human words for a season, e.g. 'Jun-Aug'."""
     if season.upper() == "ANN":
-        return "Calendar year"
+        return "Annual"
     m = season_months(season)
     return f"{MONTH_NAMES[m[0]-1]}-{MONTH_NAMES[m[-1]-1]}"
 

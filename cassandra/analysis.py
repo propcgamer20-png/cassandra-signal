@@ -120,7 +120,8 @@ def backtest(monthly: pd.DataFrame, event: dict, *, slug: str = "", N: int = N_H
     var, season, year = event["variable"], event["season"], int(event["year"])
     cut = event_cutoff(year, season)
     past = C.truncate(monthly, cut)
-    res = analyse_variable(past, var, season, slug=slug, N=N, robustness=False)
+    res = analyse_variable(past, var, season, slug=slug, N=N, robustness=False, keep=True)
+    band = res.pop("_arrays")["band"] if "_arrays" in res else None
 
     # What actually happened, measured against the baseline known at the time.
     then = seasonal_series(past, var, season)
@@ -149,6 +150,11 @@ def backtest(monthly: pd.DataFrame, event: dict, *, slug: str = "", N: int = N_H
          else observed["spi"])
     signed = z if high else -z
     observed["z"] = float(z)
+    # How rare was the event itself? Compare it with every year of the 1,000
+    # imaginary histories built only from the data before it (plain units).
+    if band is not None:
+        ev_plot = observed["anomaly"] if var == "T" else observed["pct_of_normal"]
+        observed["more_extreme_than_pct"] = float(100 * np.mean(band < ev_plot if high else band > ev_plot))
     observed["visibility"] = ("extreme" if signed >= 1.28 else
                               "unusual" if signed >= 0.43 else "not visible")
 

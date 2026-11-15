@@ -162,12 +162,12 @@ def frame(fig, t):
                  fontsize=16, color=MUTED, alpha=ease((u - 2.2) / 0.5))
     else:                                          # all places
         u = t - 27.5
-        fig.text(0.5, 0.88, "8 places, one honest card each", fontsize=26, weight="bold",
+        fig.text(0.5, 0.88, "One clear verdict for any place on Earth", fontsize=26, weight="bold",
                  ha="center", color=INK)
         names = {"no_alibi": "no alibi", "very_unlikely": "very unlikely natural",
                  "probable": "probably real", "not_yet": "not yet"}
         cols = {"no_alibi": "red", "very_unlikely": "red", "probable": "amber", "not_yet": "grey"}
-        for i, pl in enumerate(SUMMARY["places"]):
+        for i, pl in enumerate(SUMMARY["places"][:8]):
             x, y = 0.05 + (i % 2) * 0.48, 0.74 - (i // 2) * 0.13
             a = ease((u - i * 0.12) / 0.4)
             fig.text(x, y, pl["name"].split(",")[0], fontsize=17, weight="bold", color=INK, alpha=a)
@@ -175,7 +175,7 @@ def frame(fig, t):
                      color=COLOURS[cols[pl["T"]["verdict"]]], alpha=a)
             fig.text(x + 0.255, y - 0.045, f"rain: {names[pl['P']['verdict']]}", fontsize=13,
                      color=COLOURS[cols[pl["P"]["verdict"]]], alpha=a)
-        fig.text(0.5, 0.1, "cassandra-signal-climate.vercel.app", fontsize=18,
+        fig.text(0.5, 0.1, "cassandra-signal-climate.vercel.app/check", fontsize=18,
                  ha="center", color=COLOURS["red"])
 
 
