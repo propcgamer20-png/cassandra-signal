@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check any place: Cassandra Signal</title><meta name="description" content="Pick any place and season and put its NASA climate record on trial in your browser: 1,000 imaginary histories, a verdict, a backtest and a self-check."><meta property="og:type" content="website"><meta property="og:title" content="Check any place: Cassandra Signal"><meta property="og:description" content="Pick any place and season and put its NASA climate record on trial in your browser: 1,000 imaginary histories, a verdict, a backtest and a self-check."><meta property="og:image" content="https://cassandra-signal-climate.vercel.app/place/mumbai/card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://cassandra-signal-climate.vercel.app/place/mumbai/card.png"><meta property="og:url" content="https://cassandra-signal-climate.vercel.app/check/">
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23b4472d'/%3E%3C/svg%3E">
+</head><body>
+<header class="top"><a class="brand" href="../">CASSANDRA SIGNAL</a>
+<nav><a href="../check/"><strong>Check any place</strong></a><a href="../">All places</a><a href="../method/">Method &amp; checks</a></nav></header>
+<main>
+<h1>Check any place yourself</h1>
+<p class="lead">Pick any point on Earth and a season. Your browser downloads that point's monthly NASA POWER record
+(1981 to now) and puts it on trial with the same method as our cards: it builds 1,000 imaginary histories of
+natural ups and downs, ranks the real trend among them and gives a verdict. Nothing here is pre-computed, and
+nothing is sent to us.</p>
+<form id="checker" class="box" data-root="../" novalidate>
+<fieldset><legend>1. Where?</legend>
+<div class="row"><input id="q" type="search" placeholder="Search a city, town or region" autocomplete="off" aria-label="Search for a place">
+<button type="button" id="geo">Use my location</button></div>
+<ul id="results"></ul>
+<div id="map" role="application" aria-label="Map: click to choose a point"></div>
+<div class="row"><label>Latitude <input id="lat" type="number" step="0.001" min="-90" max="90" inputmode="decimal"></label>
+<label>Longitude <input id="lon" type="number" step="0.001" min="-180" max="180" inputmode="decimal"></label></div>
+<p class="small">Chosen: <span id="placename" class="muted">nothing yet</span></p>
+<p class="small muted">Or start from one of our demo places: <span id="chips"></span></p>
+</fieldset>
+<fieldset><legend>2. What?</legend>
+<div class="row seg" role="radiogroup" aria-label="Variable">
+<label><input type="radio" name="var" value="T" checked> Temperature</label>
+<label><input type="radio" name="var" value="P"> Rain</label>
+<label>Season <select id="season"><option value="ANN">Whole year</option><option value="DJF">Dec–Feb</option><option value="MAM">Mar–May</option><option value="JJA" selected>Jun–Aug</option><option value="SON">Sep–Nov</option><option value="JJAS">Jun–Sep (South Asian monsoon)</option><option value="JAS">Jul–Sep (Sahel rains)</option><option value="OND">Oct–Dec (East African short rains)</option><option value="AMJJAS">Apr–Sep (southern winter half)</option><option value="NDJFM">Nov–Mar (northern winter half)</option></select></label></div>
+</fieldset>
+<fieldset><legend>3. When? <span class="muted small">(optional: a backtest)</span></legend>
+<label class="row"><input type="checkbox" id="usecut"> Pretend it is the end of <output id="cutout">2002</output>
+and use only the data that existed then</label>
+<input type="range" id="cut" min="1996" max="2025" value="2002" disabled aria-label="Cut-off year">
+<p class="small muted">Everything is rebuilt from that shorter record, baseline included. The chart then shows what
+happened next, and the forecast is scored against it.</p>
+</fieldset>
+<button type="submit" class="primary" id="run">Put it on trial</button>
+</form>
+<ol id="steps" class="steps" aria-live="polite" hidden></ol>
+<div id="out" hidden></div>
+<h2>What happens when you press the button</h2>
+<ol>
+<li>Your browser asks the NASA POWER API for monthly temperature and rain at your point.</li>
+<li>Each month is compared with its 1981–2010 average and averaged (or, for rain, totalled) over your season.</li>
+<li>The trend is measured with Sen's slope, the median slope between every pair of years.</li>
+<li>The trend line is removed and what is left, the natural ups and downs, is modelled. 1,000 new records are made
+from that model. None of them contains a trend.</li>
+<li>If the real trend is bigger than in 950, 990 or all 1,000 of them, the verdict says so. Otherwise it says
+"not yet". A second, different kind of imaginary history (IAAFT) is used as a cross-check.</li>
+<li>Optionally, the checker tests itself on your place: fake records with no trend should be flagged only about 5%
+of the time.</li>
+</ol>
+<p><a href="../method/">The full method, its checks and its limits</a>.</p>
+</main>
+<footer><p><strong>Data: NASA POWER, NASA GISTEMP v4.</strong> Sources:
+<a href="https://power.larc.nasa.gov/">NASA POWER</a> (monthly T2M and PRECTOTCORR, 1981 to present) and
+<a href="https://data.giss.nasa.gov/gistemp/">NASA GISTEMP v4</a> (GISTEMP Team, NASA Goddard Institute for Space Studies;
+Lenssen et al. 2019). This project is not affiliated with or endorsed by NASA.</p>
+<p><strong>AI use:</strong> the analysis code, these pages and their wording were written with the help of an
+AI coding assistant, then run, checked and tested by the team; the method follows the team's own design.
+Charts and cards are drawn by our code from the data; no image on this site is AI-generated.
+<a href="../method/#ai-use">Details</a>.</p>
+<p>No cookies, no tracking, no login. The live checker runs in your browser: it asks NASA POWER for the data directly, place search uses <a href="https://open-meteo.com/en/docs/geocoding-api">Open-Meteo</a> and the map uses <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> tiles; nothing is sent to us. Built 2026-11-15 20:13 UTC from commit <a href="https://github.com/propcgamer20-png/cassandra-signal/commit/f82da7b">f82da7b</a> · <a href="https://github.com/propcgamer20-png/cassandra-signal">source code</a>.</p></footer>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script><script defer src="../js/engine.js"></script><script defer src="../js/check.js"></script></body></html>

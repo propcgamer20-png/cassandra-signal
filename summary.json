@@ -1,0 +1,443 @@
+{
+ "places": [
+  {
+   "slug": "mumbai",
+   "name": "Mumbai, India",
+   "T": {
+    "verdict": "no_alibi",
+    "p": 0.000999,
+    "trend_per_decade": 0.251938,
+    "season": "MAM"
+   },
+   "P": {
+    "verdict": "probable",
+    "p": 0.014985,
+    "trend_per_decade": 10.216003,
+    "season": "JJAS"
+   },
+   "backtests": [
+    {
+     "event": "2009 monsoon failure; Mumbai cut water supply",
+     "warned": false,
+     "visibility": "not visible"
+    }
+   ]
+  },
+  {
+   "slug": "latur",
+   "name": "Latur (Marathwada), India",
+   "T": {
+    "verdict": "not_yet",
+    "p": 0.316683,
+    "trend_per_decade": 0.079375,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.679321,
+    "trend_per_decade": -1.077073,
+    "season": "JJAS"
+   },
+   "backtests": [
+    {
+     "event": "2015 monsoon, before the 2016 Latur water-train crisis",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "cape-town",
+   "name": "Cape Town water supply, South Africa",
+   "T": {
+    "verdict": "not_yet",
+    "p": 0.120879,
+    "trend_per_decade": 0.122386,
+    "season": "DJF"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.985015,
+    "trend_per_decade": 0.062588,
+    "season": "AMJJAS"
+   },
+   "backtests": [
+    {
+     "event": "'Day Zero' water crisis, worst in mid-2017 to mid-2018",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "fresno",
+   "name": "Fresno, California, USA",
+   "T": {
+    "verdict": "very_unlikely",
+    "p": 0.003996,
+    "trend_per_decade": 0.351944,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.566434,
+    "trend_per_decade": -2.840542,
+    "season": "NDJFM"
+   },
+   "backtests": [
+    {
+     "event": "2011-2017 California drought (winter 2013-14)",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "sao-paulo",
+   "name": "São Paulo, Brazil",
+   "T": {
+    "verdict": "no_alibi",
+    "p": 0.000999,
+    "trend_per_decade": 0.387853,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "no_alibi",
+    "p": 0.000999,
+    "trend_per_decade": -9.71812,
+    "season": "ANN"
+   },
+   "backtests": [
+    {
+     "event": "São Paulo water crisis, 2014",
+     "warned": true,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "sydney",
+   "name": "Sydney, Australia",
+   "T": {
+    "verdict": "very_unlikely",
+    "p": 0.002997,
+    "trend_per_decade": 0.314548,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.138861,
+    "trend_per_decade": -5.139239,
+    "season": "ANN"
+   },
+   "backtests": [
+    {
+     "event": "Eastern Australia drought, 2017-2019",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "nairobi",
+   "name": "Nairobi, Kenya",
+   "T": {
+    "verdict": "no_alibi",
+    "p": 0.000999,
+    "trend_per_decade": 0.264641,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.058941,
+    "trend_per_decade": -6.055686,
+    "season": "OND"
+   },
+   "backtests": [
+    {
+     "event": "2020-2023 Horn of Africa drought (failed Oct-Dec 2021 rains)",
+     "warned": false,
+     "visibility": "unusual"
+    }
+   ]
+  },
+  {
+   "slug": "london",
+   "name": "London, United Kingdom",
+   "T": {
+    "verdict": "no_alibi",
+    "p": 0.000999,
+    "trend_per_decade": 0.388305,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.523477,
+    "trend_per_decade": 2.105731,
+    "season": "JJA"
+   },
+   "backtests": [
+    {
+     "event": "2022 UK heatwave, first 40 °C on record",
+     "warned": false,
+     "visibility": "extreme"
+    },
+    {
+     "event": "2022 European drought",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "paris",
+   "name": "Paris, France",
+   "T": {
+    "verdict": "very_unlikely",
+    "p": 0.006993,
+    "trend_per_decade": 0.4925,
+    "season": "JJA"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.879121,
+    "trend_per_decade": 0.649066,
+    "season": "JJA"
+   },
+   "backtests": [
+    {
+     "event": "2003 European heat wave",
+     "warned": false,
+     "visibility": "extreme"
+    },
+    {
+     "event": "2022 European drought",
+     "warned": false,
+     "visibility": "unusual"
+    }
+   ]
+  },
+  {
+   "slug": "sacramento",
+   "name": "Sacramento, California, USA",
+   "T": {
+    "verdict": "not_yet",
+    "p": 0.297702,
+    "trend_per_decade": 0.127083,
+    "season": "JJA"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.424575,
+    "trend_per_decade": -3.207768,
+    "season": "NDJFM"
+   },
+   "backtests": [
+    {
+     "event": "2011-2017 California drought (winter 2013-14)",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "austin",
+   "name": "Austin, Texas, USA",
+   "T": {
+    "verdict": "probable",
+    "p": 0.020979,
+    "trend_per_decade": 0.341667,
+    "season": "JJA"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.185814,
+    "trend_per_decade": -3.641624,
+    "season": "ANN"
+   },
+   "backtests": [
+    {
+     "event": "2011 Texas heat wave and drought",
+     "warned": false,
+     "visibility": "extreme"
+    },
+    {
+     "event": "2011 Texas drought",
+     "warned": false,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "garissa",
+   "name": "Garissa, Kenya",
+   "T": {
+    "verdict": "probable",
+    "p": 0.035964,
+    "trend_per_decade": 0.205873,
+    "season": "ANN"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.728272,
+    "trend_per_decade": -1.219226,
+    "season": "OND"
+   },
+   "backtests": [
+    {
+     "event": "2011 East Africa drought (failed 2011 long rains)",
+     "warned": false,
+     "visibility": "unusual"
+    },
+    {
+     "event": "2020-2023 Horn of Africa drought (failed Oct-Dec 2021 rains)",
+     "warned": false,
+     "visibility": "not visible"
+    }
+   ]
+  },
+  {
+   "slug": "niamey",
+   "name": "Niamey, Niger",
+   "T": {
+    "verdict": "no_alibi",
+    "p": 0.000999,
+    "trend_per_decade": 0.39009,
+    "season": "MAM"
+   },
+   "P": {
+    "verdict": "very_unlikely",
+    "p": 0.002997,
+    "trend_per_decade": 7.215373,
+    "season": "JAS"
+   },
+   "backtests": [
+    {
+     "event": "Sahel heatwave, late March to early April 2024",
+     "warned": true,
+     "visibility": "extreme"
+    }
+   ]
+  },
+  {
+   "slug": "wagga-wagga",
+   "name": "Wagga Wagga, Australia",
+   "T": {
+    "verdict": "not_yet",
+    "p": 0.0999,
+    "trend_per_decade": 0.286508,
+    "season": "DJF"
+   },
+   "P": {
+    "verdict": "not_yet",
+    "p": 0.333666,
+    "trend_per_decade": -3.663805,
+    "season": "ANN"
+   },
+   "backtests": [
+    {
+     "event": "Millennium drought: 2006, driest year on record for much of Australia",
+     "warned": false,
+     "visibility": "extreme"
+    },
+    {
+     "event": "Black Summer heat, Dec 2019 to Feb 2020",
+     "warned": true,
+     "visibility": "unusual"
+    }
+   ]
+  }
+ ],
+ "false_alarm": [
+  {
+   "case": "white",
+   "description": "White noise (no memory)",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 56,
+   "rate": 0.056,
+   "ci95": [
+    0.043375,
+    0.072024
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.383367
+  },
+  {
+   "case": "ar1_03",
+   "description": "AR(1) noise, lag-1 correlation 0.3",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 48,
+   "rate": 0.048,
+   "ci95": [
+    0.036393,
+    0.063066
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.82783
+  },
+  {
+   "case": "ar1_06",
+   "description": "AR(1) noise, lag-1 correlation 0.6 (strong memory)",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 60,
+   "rate": 0.06,
+   "ci95": [
+    0.046896,
+    0.076471
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.146547
+  },
+  {
+   "case": "skewed",
+   "description": "Skewed noise like rainfall (gamma, shape 2)",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 15,
+   "rate": 0.015,
+   "ci95": [
+    0.009111,
+    0.024601
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.0
+  },
+  {
+   "case": "ar1_03",
+   "description": "AR(1) noise, lag-1 correlation 0.3",
+   "trend_sd_per_decade": 0.25,
+   "n_series": 500,
+   "years": 45,
+   "flagged": 149,
+   "rate": 0.298,
+   "ci95": [
+    0.259573,
+    0.339508
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.0
+  },
+  {
+   "case": "ar1_03",
+   "description": "AR(1) noise, lag-1 correlation 0.3",
+   "trend_sd_per_decade": 0.5,
+   "n_series": 500,
+   "years": 45,
+   "flagged": 392,
+   "rate": 0.784,
+   "ci95": [
+    0.745836,
+    0.817833
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.0
+  }
+ ]
+}

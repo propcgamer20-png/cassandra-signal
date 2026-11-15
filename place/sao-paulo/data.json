@@ -1,0 +1,1297 @@
+{
+ "place": {
+  "slug": "sao-paulo",
+  "name": "São Paulo, Brazil",
+  "lat": -23.551,
+  "lon": -46.633,
+  "t_season": "ANN",
+  "p_season": "ANN",
+  "primary": "T",
+  "notes": "Megacity of 22 million whose main reservoir system nearly ran dry in the 2014-2015 water crisis."
+ },
+ "primary": "T",
+ "results": {
+  "T": {
+   "variable": "T",
+   "variable_name": "temperature",
+   "season": "ANN",
+   "season_label": "Annual",
+   "unit": "°C",
+   "first_year": 1981,
+   "last_year": 2025,
+   "n_years": 45,
+   "baseline": [
+    1981,
+    2010
+   ],
+   "normal": 19.024833,
+   "data_cutoff": "2026-09",
+   "test": {
+    "generator": "ar1",
+    "fit": {
+     "phi": 0.261759,
+     "phi_raw": 0.18823,
+     "sigma": 0.501896,
+     "n_eff": 26.32902,
+     "n": 45
+    },
+    "seed": 784895,
+    "real": 0.038785,
+    "count": 0,
+    "N": 1000,
+    "outside": 1000,
+    "p": 0.000999,
+    "verdict": {
+     "key": "no_alibi",
+     "text": "Natural variation has no alibi",
+     "colour": "red"
+    }
+   },
+   "verdict": {
+    "key": "no_alibi",
+    "text": "Natural variation has no alibi",
+    "colour": "red"
+   },
+   "trend_per_decade": 0.387853,
+   "change_over_record": 1.706552,
+   "recent_shift": 1.327583,
+   "direction": "warmer",
+   "robustness": {
+    "arma": {
+     "p": 0.000999,
+     "outside": 1000,
+     "verdict": "no_alibi",
+     "fit": {
+      "p": 0,
+      "q": 1,
+      "aic": 63.953451,
+      "ar": [],
+      "ma": [
+       0.242608
+      ],
+      "sigma2": 0.221585
+     }
+    },
+    "iaaft": {
+     "p": 0.000999,
+     "outside": 1000,
+     "verdict": "no_alibi",
+     "fit": {}
+    }
+   }
+  },
+  "P": {
+   "variable": "P",
+   "variable_name": "precipitation",
+   "season": "ANN",
+   "season_label": "Annual",
+   "unit": "% of normal",
+   "first_year": 1981,
+   "last_year": 2025,
+   "n_years": 45,
+   "baseline": [
+    1981,
+    2010
+   ],
+   "normal": 1616.843,
+   "data_cutoff": "2026-09",
+   "test": {
+    "generator": "ar1",
+    "fit": {
+     "phi": 0.059276,
+     "phi_raw": 0.008246,
+     "sigma": 1.023383,
+     "n_eff": 39.963664,
+     "n": 45
+    },
+    "seed": 349237,
+    "real": -0.061268,
+    "count": 0,
+    "N": 1000,
+    "outside": 1000,
+    "p": 0.000999,
+    "verdict": {
+     "key": "no_alibi",
+     "text": "Natural variation has no alibi",
+     "colour": "red"
+    }
+   },
+   "verdict": {
+    "key": "no_alibi",
+    "text": "Natural variation has no alibi",
+    "colour": "red"
+   },
+   "trend_per_decade": -9.71812,
+   "change_over_record": -42.759727,
+   "recent_shift": -33.881985,
+   "direction": "drier",
+   "normal_mm": 1616.843,
+   "spi_trend_per_decade": -0.612682,
+   "robustness": {
+    "arma": {
+     "p": 0.000999,
+     "outside": 1000,
+     "verdict": "no_alibi",
+     "fit": {
+      "p": 0,
+      "q": 0,
+      "aic": 129.4744,
+      "ar": [],
+      "ma": [],
+      "sigma2": 0.9949
+     }
+    },
+    "iaaft": {
+     "p": 0.000999,
+     "outside": 1000,
+     "verdict": "no_alibi",
+     "fit": {}
+    }
+   }
+  }
+ },
+ "gistemp": {
+  "first": 1981,
+  "last": 2025,
+  "global_trend": 0.211111,
+  "zone": "24S-EQU",
+  "zone_label": "0-24°S",
+  "zone_trend": 0.138447,
+  "latest": 1.19
+ },
+ "backtests": [
+  {
+   "event": {
+    "slug": "sao-paulo",
+    "year": 2014,
+    "variable": "P",
+    "season": "ANN",
+    "kind": "drought",
+    "name": "São Paulo water crisis, 2014",
+    "source": "https://en.wikipedia.org/wiki/2014%E2%80%932017_Brazilian_drought"
+   },
+   "cutoff": "2013-12",
+   "result": {
+    "variable": "P",
+    "variable_name": "precipitation",
+    "season": "ANN",
+    "season_label": "Annual",
+    "unit": "% of normal",
+    "first_year": 1981,
+    "last_year": 2013,
+    "n_years": 33,
+    "baseline": [
+     1981,
+     2010
+    ],
+    "normal": 1616.843,
+    "data_cutoff": "2013-12",
+    "test": {
+     "generator": "ar1",
+     "fit": {
+      "phi": 0.098589,
+      "phi_raw": 0.023045,
+      "sigma": 0.971803,
+      "n_eff": 27.077077,
+      "n": 33
+     },
+     "seed": 349237,
+     "real": -0.046752,
+     "count": 41,
+     "N": 1000,
+     "outside": 959,
+     "p": 0.041958,
+     "verdict": {
+      "key": "probable",
+      "text": "Probably a real change",
+      "colour": "amber"
+     }
+    },
+    "verdict": {
+     "key": "probable",
+     "text": "Probably a real change",
+     "colour": "amber"
+    },
+    "trend_per_decade": -7.465331,
+    "change_over_record": -23.889059,
+    "recent_shift": -13.277263,
+    "direction": "drier",
+    "normal_mm": 1616.843,
+    "spi_trend_per_decade": -0.467519
+   },
+   "observed": {
+    "total_mm": 863.3,
+    "pct_of_normal": 53.394176,
+    "spi": -3.291497,
+    "rank_in_record": 1,
+    "record_years": 33,
+    "z": -3.291497,
+    "more_extreme_than_pct": 99.893939,
+    "visibility": "extreme"
+   },
+   "expected_direction": "drier",
+   "warned": true,
+   "forecast_at_the_time": {
+    "variable": "P",
+    "season": "ANN",
+    "target_year": 2014,
+    "probabilities": {
+     "below": 0.655,
+     "near": 0.236,
+     "above": 0.109
+    },
+    "tercile_edges": [
+     1481.763,
+     1713.593
+    ],
+    "unit": "mm",
+    "baseline": [
+     1981,
+     2010
+    ],
+    "trend_centre": 1377.891,
+    "seasons_used": 33,
+    "data_cutoff": "2013-12"
+   }
+  }
+ ],
+ "hindcasts": {
+  "T": {
+   "n": 30,
+   "first_year": 1996,
+   "last_year": 2025,
+   "rpss": 0.510561,
+   "bss": 0.439021,
+   "hit_rate": 0.733333,
+   "rows": [
+    {
+     "year": 1996,
+     "probabilities": {
+      "below": 0.305,
+      "near": 0.259,
+      "above": 0.436
+     },
+     "observed": "below",
+     "rps": 0.336561,
+     "rps_clim": 0.277778,
+     "brier": 0.246734,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 1997,
+     "probabilities": {
+      "below": 0.511,
+      "near": 0.254,
+      "above": 0.235
+     },
+     "observed": "above",
+     "rps": 0.423173,
+     "rps_clim": 0.277778,
+     "brier": 0.303621,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 1998,
+     "probabilities": {
+      "below": 0.309,
+      "near": 0.287,
+      "above": 0.404
+     },
+     "observed": "above",
+     "rps": 0.225348,
+     "rps_clim": 0.277778,
+     "brier": 0.177689,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 1999,
+     "probabilities": {
+      "below": 0.195,
+      "near": 0.259,
+      "above": 0.546
+     },
+     "observed": "below",
+     "rps": 0.47307,
+     "rps_clim": 0.277778,
+     "brier": 0.337741,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2000,
+     "probabilities": {
+      "below": 0.297,
+      "near": 0.296,
+      "above": 0.407
+     },
+     "observed": "above",
+     "rps": 0.219929,
+     "rps_clim": 0.277778,
+     "brier": 0.175825,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2001,
+     "probabilities": {
+      "below": 0.213,
+      "near": 0.286,
+      "above": 0.501
+     },
+     "observed": "above",
+     "rps": 0.147185,
+     "rps_clim": 0.277778,
+     "brier": 0.125389,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2002,
+     "probabilities": {
+      "below": 0.16,
+      "near": 0.266,
+      "above": 0.574
+     },
+     "observed": "above",
+     "rps": 0.103538,
+     "rps_clim": 0.277778,
+     "brier": 0.092611,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2003,
+     "probabilities": {
+      "below": 0.148,
+      "near": 0.245,
+      "above": 0.607
+     },
+     "observed": "above",
+     "rps": 0.088177,
+     "rps_clim": 0.277778,
+     "brier": 0.078793,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2004,
+     "probabilities": {
+      "below": 0.094,
+      "near": 0.197,
+      "above": 0.709
+     },
+     "observed": "near",
+     "rps": 0.255758,
+     "rps_clim": 0.111111,
+     "brier": 0.385442,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2005,
+     "probabilities": {
+      "below": 0.147,
+      "near": 0.214,
+      "above": 0.639
+     },
+     "observed": "above",
+     "rps": 0.075965,
+     "rps_clim": 0.277778,
+     "brier": 0.065909,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2006,
+     "probabilities": {
+      "below": 0.125,
+      "near": 0.196,
+      "above": 0.679
+     },
+     "observed": "above",
+     "rps": 0.059333,
+     "rps_clim": 0.277778,
+     "brier": 0.052361,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2007,
+     "probabilities": {
+      "below": 0.093,
+      "near": 0.21,
+      "above": 0.697
+     },
+     "observed": "above",
+     "rps": 0.050229,
+     "rps_clim": 0.277778,
+     "brier": 0.048186,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2008,
+     "probabilities": {
+      "below": 0.067,
+      "near": 0.244,
+      "above": 0.689
+     },
+     "observed": "near",
+     "rps": 0.239605,
+     "rps_clim": 0.111111,
+     "brier": 0.350249,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2009,
+     "probabilities": {
+      "below": 0.088,
+      "near": 0.214,
+      "above": 0.698
+     },
+     "observed": "above",
+     "rps": 0.049474,
+     "rps_clim": 0.277778,
+     "brier": 0.048248,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2010,
+     "probabilities": {
+      "below": 0.072,
+      "near": 0.301,
+      "above": 0.627
+     },
+     "observed": "near",
+     "rps": 0.199157,
+     "rps_clim": 0.111111,
+     "brier": 0.295638,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2011,
+     "probabilities": {
+      "below": 0.084,
+      "near": 0.268,
+      "above": 0.648
+     },
+     "observed": "near",
+     "rps": 0.21348,
+     "rps_clim": 0.111111,
+     "brier": 0.320928,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2012,
+     "probabilities": {
+      "below": 0.111,
+      "near": 0.303,
+      "above": 0.586
+     },
+     "observed": "above",
+     "rps": 0.091858,
+     "rps_clim": 0.277778,
+     "brier": 0.091842,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2013,
+     "probabilities": {
+      "below": 0.061,
+      "near": 0.227,
+      "above": 0.712
+     },
+     "observed": "near",
+     "rps": 0.255332,
+     "rps_clim": 0.111111,
+     "brier": 0.369398,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2014,
+     "probabilities": {
+      "below": 0.068,
+      "near": 0.243,
+      "above": 0.689
+     },
+     "observed": "above",
+     "rps": 0.050673,
+     "rps_clim": 0.277778,
+     "brier": 0.053465,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2015,
+     "probabilities": {
+      "below": 0.059,
+      "near": 0.194,
+      "above": 0.747
+     },
+     "observed": "above",
+     "rps": 0.033745,
+     "rps_clim": 0.277778,
+     "brier": 0.035042,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2016,
+     "probabilities": {
+      "below": 0.04,
+      "near": 0.152,
+      "above": 0.808
+     },
+     "observed": "above",
+     "rps": 0.019232,
+     "rps_clim": 0.277778,
+     "brier": 0.020523,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2017,
+     "probabilities": {
+      "below": 0.036,
+      "near": 0.145,
+      "above": 0.819
+     },
+     "observed": "above",
+     "rps": 0.017028,
+     "rps_clim": 0.277778,
+     "brier": 0.018361,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2018,
+     "probabilities": {
+      "below": 0.031,
+      "near": 0.138,
+      "above": 0.831
+     },
+     "observed": "above",
+     "rps": 0.014761,
+     "rps_clim": 0.277778,
+     "brier": 0.016189,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2019,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.107,
+      "above": 0.873
+     },
+     "observed": "above",
+     "rps": 0.008265,
+     "rps_clim": 0.277778,
+     "brier": 0.009326,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2020,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.077,
+      "above": 0.903
+     },
+     "observed": "above",
+     "rps": 0.004905,
+     "rps_clim": 0.277778,
+     "brier": 0.005246,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2021,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.073,
+      "above": 0.907
+     },
+     "observed": "above",
+     "rps": 0.004524,
+     "rps_clim": 0.277778,
+     "brier": 0.004793,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2022,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.057,
+      "above": 0.923
+     },
+     "observed": "above",
+     "rps": 0.003165,
+     "rps_clim": 0.277778,
+     "brier": 0.003193,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2023,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.061,
+      "above": 0.919
+     },
+     "observed": "above",
+     "rps": 0.003481,
+     "rps_clim": 0.277778,
+     "brier": 0.003561,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2024,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.043,
+      "above": 0.937
+     },
+     "observed": "above",
+     "rps": 0.002185,
+     "rps_clim": 0.277778,
+     "brier": 0.002073,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2025,
+     "probabilities": {
+      "below": 0.02,
+      "near": 0.034,
+      "above": 0.946
+     },
+     "observed": "above",
+     "rps": 0.001658,
+     "rps_clim": 0.277778,
+     "brier": 0.001491,
+     "brier_clim": 0.222222
+    }
+   ],
+   "season": "ANN"
+  },
+  "P": {
+   "n": 30,
+   "first_year": 1996,
+   "last_year": 2025,
+   "rpss": 0.486338,
+   "bss": 0.418031,
+   "hit_rate": 0.7,
+   "rows": [
+    {
+     "year": 1996,
+     "probabilities": {
+      "below": 0.304,
+      "near": 0.342,
+      "above": 0.354
+     },
+     "observed": "near",
+     "rps": 0.108866,
+     "rps_clim": 0.111111,
+     "brier": 0.216899,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 1997,
+     "probabilities": {
+      "below": 0.275,
+      "near": 0.326,
+      "above": 0.399
+     },
+     "observed": "near",
+     "rps": 0.117413,
+     "rps_clim": 0.111111,
+     "brier": 0.229701,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 1998,
+     "probabilities": {
+      "below": 0.309,
+      "near": 0.323,
+      "above": 0.368
+     },
+     "observed": "below",
+     "rps": 0.306453,
+     "rps_clim": 0.277778,
+     "brier": 0.239078,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 1999,
+     "probabilities": {
+      "below": 0.379,
+      "near": 0.35,
+      "above": 0.271
+     },
+     "observed": "above",
+     "rps": 0.337541,
+     "rps_clim": 0.277778,
+     "brier": 0.265861,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2000,
+     "probabilities": {
+      "below": 0.237,
+      "near": 0.314,
+      "above": 0.449
+     },
+     "observed": "below",
+     "rps": 0.391885,
+     "rps_clim": 0.277778,
+     "brier": 0.294122,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2001,
+     "probabilities": {
+      "below": 0.363,
+      "near": 0.345,
+      "above": 0.292
+     },
+     "observed": "below",
+     "rps": 0.245516,
+     "rps_clim": 0.277778,
+     "brier": 0.203353,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2002,
+     "probabilities": {
+      "below": 0.448,
+      "near": 0.339,
+      "above": 0.213
+     },
+     "observed": "below",
+     "rps": 0.175037,
+     "rps_clim": 0.277778,
+     "brier": 0.154998,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2003,
+     "probabilities": {
+      "below": 0.566,
+      "near": 0.295,
+      "above": 0.139
+     },
+     "observed": "below",
+     "rps": 0.103839,
+     "rps_clim": 0.277778,
+     "brier": 0.098234,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2004,
+     "probabilities": {
+      "below": 0.65,
+      "near": 0.247,
+      "above": 0.103
+     },
+     "observed": "near",
+     "rps": 0.216555,
+     "rps_clim": 0.111111,
+     "brier": 0.333373,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2005,
+     "probabilities": {
+      "below": 0.624,
+      "near": 0.246,
+      "above": 0.13
+     },
+     "observed": "below",
+     "rps": 0.079138,
+     "rps_clim": 0.277778,
+     "brier": 0.072931,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2006,
+     "probabilities": {
+      "below": 0.604,
+      "near": 0.243,
+      "above": 0.153
+     },
+     "observed": "below",
+     "rps": 0.090113,
+     "rps_clim": 0.277778,
+     "brier": 0.079758,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2007,
+     "probabilities": {
+      "below": 0.642,
+      "near": 0.236,
+      "above": 0.122
+     },
+     "observed": "below",
+     "rps": 0.071524,
+     "rps_clim": 0.277778,
+     "brier": 0.066248,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2008,
+     "probabilities": {
+      "below": 0.651,
+      "near": 0.249,
+      "above": 0.1
+     },
+     "observed": "near",
+     "rps": 0.216901,
+     "rps_clim": 0.111111,
+     "brier": 0.332601,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2009,
+     "probabilities": {
+      "below": 0.655,
+      "near": 0.237,
+      "above": 0.108
+     },
+     "observed": "above",
+     "rps": 0.612345,
+     "rps_clim": 0.277778,
+     "brier": 0.426953,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2010,
+     "probabilities": {
+      "below": 0.574,
+      "near": 0.267,
+      "above": 0.159
+     },
+     "observed": "near",
+     "rps": 0.177378,
+     "rps_clim": 0.111111,
+     "brier": 0.297349,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2011,
+     "probabilities": {
+      "below": 0.545,
+      "near": 0.274,
+      "above": 0.181
+     },
+     "observed": "below",
+     "rps": 0.119893,
+     "rps_clim": 0.277778,
+     "brier": 0.104954,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2012,
+     "probabilities": {
+      "below": 0.58,
+      "near": 0.265,
+      "above": 0.155
+     },
+     "observed": "below",
+     "rps": 0.100213,
+     "rps_clim": 0.277778,
+     "brier": 0.090217,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2013,
+     "probabilities": {
+      "below": 0.609,
+      "near": 0.256,
+      "above": 0.135
+     },
+     "observed": "below",
+     "rps": 0.085553,
+     "rps_clim": 0.277778,
+     "brier": 0.078881,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2014,
+     "probabilities": {
+      "below": 0.655,
+      "near": 0.236,
+      "above": 0.109
+     },
+     "observed": "below",
+     "rps": 0.065453,
+     "rps_clim": 0.277778,
+     "brier": 0.062201,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2015,
+     "probabilities": {
+      "below": 0.737,
+      "near": 0.183,
+      "above": 0.08
+     },
+     "observed": "below",
+     "rps": 0.037785,
+     "rps_clim": 0.277778,
+     "brier": 0.036353,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2016,
+     "probabilities": {
+      "below": 0.719,
+      "near": 0.195,
+      "above": 0.086
+     },
+     "observed": "below",
+     "rps": 0.043179,
+     "rps_clim": 0.277778,
+     "brier": 0.041461,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2017,
+     "probabilities": {
+      "below": 0.775,
+      "near": 0.165,
+      "above": 0.06
+     },
+     "observed": "below",
+     "rps": 0.027112,
+     "rps_clim": 0.277778,
+     "brier": 0.02715,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2018,
+     "probabilities": {
+      "below": 0.754,
+      "near": 0.179,
+      "above": 0.067
+     },
+     "observed": "below",
+     "rps": 0.032502,
+     "rps_clim": 0.277778,
+     "brier": 0.032349,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2019,
+     "probabilities": {
+      "below": 0.824,
+      "near": 0.134,
+      "above": 0.042
+     },
+     "observed": "below",
+     "rps": 0.01637,
+     "rps_clim": 0.277778,
+     "brier": 0.016899,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2020,
+     "probabilities": {
+      "below": 0.825,
+      "near": 0.134,
+      "above": 0.041
+     },
+     "observed": "below",
+     "rps": 0.016153,
+     "rps_clim": 0.277778,
+     "brier": 0.016754,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2021,
+     "probabilities": {
+      "below": 0.818,
+      "near": 0.14,
+      "above": 0.042
+     },
+     "observed": "below",
+     "rps": 0.017444,
+     "rps_clim": 0.277778,
+     "brier": 0.018163,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2022,
+     "probabilities": {
+      "below": 0.862,
+      "near": 0.109,
+      "above": 0.029
+     },
+     "observed": "below",
+     "rps": 0.009943,
+     "rps_clim": 0.277778,
+     "brier": 0.010589,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2023,
+     "probabilities": {
+      "below": 0.845,
+      "near": 0.121,
+      "above": 0.034
+     },
+     "observed": "below",
+     "rps": 0.012591,
+     "rps_clim": 0.277778,
+     "brier": 0.013274,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2024,
+     "probabilities": {
+      "below": 0.853,
+      "near": 0.116,
+      "above": 0.031
+     },
+     "observed": "below",
+     "rps": 0.011285,
+     "rps_clim": 0.277778,
+     "brier": 0.012009,
+     "brier_clim": 0.222222
+    },
+    {
+     "year": 2025,
+     "probabilities": {
+      "below": 0.888,
+      "near": 0.091,
+      "above": 0.021
+     },
+     "observed": "below",
+     "rps": 0.006492,
+     "rps_clim": 0.277778,
+     "brier": 0.007089,
+     "brier_clim": 0.222222
+    }
+   ],
+   "season": "ANN"
+  }
+ },
+ "last_seasons": {
+  "variable": "T",
+  "season": "DJF",
+  "season_words": "Dec-Feb",
+  "unit": "°C",
+  "rows": [
+   {
+    "year": 2017,
+    "probabilities": {
+     "below": 0.054,
+     "near": 0.162,
+     "above": 0.784
+    },
+    "observed": "above",
+    "rps": 0.024786,
+    "rps_clim": 0.277778,
+    "brier": 0.025272,
+    "brier_clim": 0.222222,
+    "value": 22.58
+   },
+   {
+    "year": 2018,
+    "probabilities": {
+     "below": 0.044,
+     "near": 0.146,
+     "above": 0.81
+    },
+    "observed": "above",
+    "rps": 0.019018,
+    "rps_clim": 0.277778,
+    "brier": 0.019784,
+    "brier_clim": 0.222222,
+    "value": 22.096667
+   },
+   {
+    "year": 2019,
+    "probabilities": {
+     "below": 0.043,
+     "near": 0.148,
+     "above": 0.809
+    },
+    "observed": "above",
+    "rps": 0.019165,
+    "rps_clim": 0.277778,
+    "brier": 0.020078,
+    "brier_clim": 0.222222,
+    "value": 23.316667
+   },
+   {
+    "year": 2020,
+    "probabilities": {
+     "below": 0.034,
+     "near": 0.127,
+     "above": 0.839
+    },
+    "observed": "above",
+    "rps": 0.013539,
+    "rps_clim": 0.277778,
+    "brier": 0.014402,
+    "brier_clim": 0.222222,
+    "value": 22.173333
+   },
+   {
+    "year": 2021,
+    "probabilities": {
+     "below": 0.033,
+     "near": 0.125,
+     "above": 0.842
+    },
+    "observed": "above",
+    "rps": 0.013026,
+    "rps_clim": 0.277778,
+    "brier": 0.013893,
+    "brier_clim": 0.222222,
+    "value": 23.003333
+   },
+   {
+    "year": 2022,
+    "probabilities": {
+     "below": 0.025,
+     "near": 0.109,
+     "above": 0.866
+    },
+    "observed": "near",
+    "rps": 0.37529,
+    "rps_clim": 0.111111,
+    "brier": 0.514821,
+    "brier_clim": 0.222222,
+    "value": 22.023333
+   },
+   {
+    "year": 2023,
+    "probabilities": {
+     "below": 0.026,
+     "near": 0.111,
+     "above": 0.863
+    },
+    "observed": "near",
+    "rps": 0.372723,
+    "rps_clim": 0.111111,
+    "brier": 0.511922,
+    "brier_clim": 0.222222,
+    "value": 21.65
+   },
+   {
+    "year": 2024,
+    "probabilities": {
+     "below": 0.037,
+     "near": 0.132,
+     "above": 0.831
+    },
+    "observed": "above",
+    "rps": 0.014965,
+    "rps_clim": 0.277778,
+    "brier": 0.015785,
+    "brier_clim": 0.222222,
+    "value": 24.126667
+   },
+   {
+    "year": 2025,
+    "probabilities": {
+     "below": 0.031,
+     "near": 0.106,
+     "above": 0.863
+    },
+    "observed": "above",
+    "rps": 0.009865,
+    "rps_clim": 0.277778,
+    "brier": 0.010322,
+    "brier_clim": 0.222222,
+    "value": 23.423333
+   },
+   {
+    "year": 2026,
+    "probabilities": {
+     "below": 0.024,
+     "near": 0.09,
+     "above": 0.886
+    },
+    "observed": "above",
+    "rps": 0.006786,
+    "rps_clim": 0.277778,
+    "brier": 0.007224,
+    "brier_clim": 0.222222,
+    "value": 23.536667
+   }
+  ],
+  "hits": 8,
+  "rpss": 0.644433
+ },
+ "locked_forecasts": [
+  {
+   "file": "forecasts/sao-paulo/2027-DJF.json",
+   "doc": {
+    "schema": "cassandra-signal/forecast/v1",
+    "place": {
+     "slug": "sao-paulo",
+     "name": "São Paulo, Brazil",
+     "lat": -23.551,
+     "lon": -46.633
+    },
+    "season": "DJF",
+    "season_months": "Dec-Feb",
+    "target_year": 2027,
+    "season_starts": "2026-12-01",
+    "issued_at_utc": "2026-11-15T19:48:15Z",
+    "categories": "below / near / above the middle third of 1981-2010 seasons",
+    "method": "Trend-shifted climatology: tercile edges from the 1981-2010 seasons; the season's value is predicted from the Sen's-slope trend line fitted to all complete seasons before the cut-off, with a normal spread equal to the scatter around that line (prediction-interval widened). Precipitation is handled as SPI (gamma fit on 1981-2010). Each category is kept at 2% or more.",
+    "data": "NASA POWER monthly T2M and PRECTOTCORR",
+    "variables": {
+     "T": {
+      "variable": "T",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+       "below": 0.02,
+       "near": 0.066,
+       "above": 0.914
+      },
+      "tercile_edges": [
+       21.536,
+       22.029
+      ],
+      "unit": "°C",
+      "baseline": [
+       1982,
+       2010
+      ],
+      "trend_centre": 22.922,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+     },
+     "P": {
+      "variable": "P",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+       "below": 0.865,
+       "near": 0.095,
+       "above": 0.04
+      },
+      "tercile_edges": [
+       601.477,
+       697.61
+      ],
+      "unit": "mm",
+      "baseline": [
+       1982,
+       2010
+      ],
+      "trend_centre": 459.083,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+     }
+    }
+   },
+   "sha256": "049f9eb56bd6cec2da5434ce098b876eacadc086f91558b09010a7baeb931bf7",
+   "scores": {
+    "T": {
+     "status": "pending"
+    },
+    "P": {
+     "status": "pending"
+    }
+   },
+   "git": {
+    "committed": true,
+    "commit": "38e204dc1048f85541ead054d2497ddbb0ee0ca2",
+    "commit_time": "2026-11-16T01:22:58+05:30",
+    "unchanged_since_commit": true
+   }
+  }
+ ],
+ "seed_base": 1981,
+ "histories": 1000
+}
