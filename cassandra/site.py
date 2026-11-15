@@ -114,7 +114,7 @@ def observed_words(bt):
     return s.replace("+-", "−"), rank, vis
 
 
-def backtest_block(bts):
+def backtest_block(bts, place):
     if not bts:
         return ""
     out = ['<h2 id="backtest">Would it have warned? Backtests on real events</h2>',
@@ -145,7 +145,7 @@ def backtest_block(bts):
 <p>Using data up to {bt['cutoff']} ({res['n_years']} seasons): <span class="pill {res['verdict']['colour']}">{esc(res['verdict']['text'])}</span>
 · trend {esc(change_short(res))} · outside {res['test']['outside']:,} of {res['test']['N']:,} histories.</p>
 <p>What happened: {esc(obs)}, {esc(rank)}. {esc(vis)}.</p>
-{missing}{fc_html}</div>""")
+{missing}{fc_html}<p class="small"><a href="{esc(check_link('../../', place, ev['variable'], ev['season'], int(bt['cutoff'][:4])))}">Re-run this backtest live, and move the cut-off year →</a></p></div>""")
     return "\n".join(out)
 
 
@@ -219,11 +219,12 @@ def place_body(place, primary, secondary, ctx, bts, locked, hind, repo_url, powe
 <h1>{esc(place['name'])}</h1>
 <p class="muted">{esc(place['notes'])}</p>
 {verdict_block(primary, f"chart-{p_var}.png", f"hist-{p_var}.png")}
+<p><a class="cta" href="{esc(check_link('../../', place, p_var, primary['season']))}">Re-run this live, or change the season →</a></p>
 <p class="small"><a href="card.png">Share card (PNG)</a> · <a href="data.json">All numbers (JSON)</a></p>
 <h2 id="second">{esc(season_label(secondary['season']))} {esc(secondary['variable_name'])}</h2>
 {verdict_block(secondary, f"chart-{secondary['variable']}.png", f"hist-{secondary['variable']}.png", big=False)}
 {context_block(ctx, primary if p_var == 'T' else secondary)}
-{backtest_block(bts)}
+{backtest_block(bts, place)}
 {forecast_block(locked, hind, repo_url)}
 <h2 id="sources">Sources</h2>
 <ul>
@@ -251,6 +252,8 @@ def index_body(cards, fa_rows, n_locked, n_pending, n_scored):
 histories</strong> of what that place's record could have looked like through natural ups and downs alone,
 and ask whether the real record stands out from all of them. Then we keep an honest public track record:
 we test the method on past droughts and heatwaves, and we lock in forecasts before each season starts.</p>
+<p><a class="cta" href="check/">Check any place yourself →</a>
+<span class="muted small">Any point on Earth, any season, any year back to 1996. Runs in your browser in a few seconds.</span></p>
 <p class="muted">In Greek myth, Cassandra gave true warnings that nobody believed. Warnings get believed when the evidence
 can be checked and the predictions were written down first.</p>
 <div class="grid">{tiles}</div>
@@ -352,6 +355,12 @@ build re-checks that the file still matches the committed version. A monthly Git
 next season's forecasts before the season starts, and scores finished seasons with the ranked probability score (RPS)
 and Brier score against the 33/33/33 climatology, misses included.</p>
 
+<h2 id="live">8. The live checker</h2>
+<p>The <a href="../check/">checker</a> runs steps 1–7 in your browser for any point and season, using a JavaScript copy of
+the pipeline. An automated test runs it against the Python code for every demo place: trends, anomalies, noise fits,
+SPI, forecasts and hindcast skill match, and p-values agree within sampling noise (the random number generators differ).
+Its self-check repeats step 5 with the chosen place's own fitted noise.</p>
+
 <h2 id="limits">Limitations</h2>
 <ul>
 <li><strong>Short records.</strong> NASA POWER starts in 1981, so each test has about 45 seasons. Real but modest
@@ -371,7 +380,7 @@ longer than the record.</li>
 <h2 id="ai-use">AI use</h2>
 <p>As required by the NASA Space Apps Challenge rules we disclose AI use. The project idea, the method and its
 choices, and the review of results are the team's. An AI coding assistant (a large language model) wrote most of the
-Python code (data download, statistics, backtests, forecasts, charts and page generation), the tests, the GitHub
+Python code (data download, statistics, backtests, forecasts, charts and page generation), the JavaScript live checker, the tests, the GitHub
 Actions workflows, the README and the wording of these pages, working from the team's written brief. The team ran the
 pipeline, read the outputs and checked them against the brief. Charts and share cards are drawn by our code from NASA
 data; no image on this site was produced by an image-generating AI.</p>
@@ -384,4 +393,72 @@ data; no image on this site was produced by an image-generating AI.</p>
 <a href="https://data.giss.nasa.gov/gistemp/">data.giss.nasa.gov/gistemp</a>. Lenssen, N., et al. (2019),
 Improvements in the GISTEMP uncertainty model, J. Geophys. Res. Atmos., 124, 6307–6326.</li>
 </ul>
+"""
+
+
+SEASON_CHOICES = [("ANN", "Whole year"), ("DJF", "Dec–Feb"), ("MAM", "Mar–May"), ("JJA", "Jun–Aug"),
+                  ("SON", "Sep–Nov"), ("JJAS", "Jun–Sep (South Asian monsoon)"), ("JAS", "Jul–Sep (Sahel rains)"),
+                  ("OND", "Oct–Dec (East African short rains)"), ("AMJJAS", "Apr–Sep (southern winter half)"),
+                  ("NDJFM", "Nov–Mar (northern winter half)")]
+
+
+def check_link(root, place, var, season, cutoff=None):
+    from urllib.parse import urlencode
+    q = {"lat": f"{place['lat']:.3f}", "lon": f"{place['lon']:.3f}", "name": place["name"], "var": var,
+         "season": season}
+    if cutoff:
+        q["cutoff"] = cutoff
+    return f"{root}check/?{urlencode(q)}"
+
+
+def check_body(max_cut):
+    opts = "".join(f'<option value="{k}"{" selected" if k == "JJA" else ""}>{esc(v)}</option>'
+                   for k, v in SEASON_CHOICES)
+    return f"""
+<h1>Check any place yourself</h1>
+<p class="lead">Pick any point on Earth and a season. Your browser downloads that point's monthly NASA POWER record
+(1981 to now) and puts it on trial with the same method as our cards: it builds 1,000 imaginary histories of
+natural ups and downs, ranks the real trend among them and gives a verdict. Nothing here is pre-computed, and
+nothing is sent to us.</p>
+<form id="checker" class="box" data-root="../" novalidate>
+<fieldset><legend>1. Where?</legend>
+<div class="row"><input id="q" type="search" placeholder="Search a city, town or region" autocomplete="off" aria-label="Search for a place">
+<button type="button" id="geo">Use my location</button></div>
+<ul id="results"></ul>
+<div id="map" role="application" aria-label="Map: click to choose a point"></div>
+<div class="row"><label>Latitude <input id="lat" type="number" step="0.001" min="-90" max="90" inputmode="decimal"></label>
+<label>Longitude <input id="lon" type="number" step="0.001" min="-180" max="180" inputmode="decimal"></label></div>
+<p class="small">Chosen: <span id="placename" class="muted">nothing yet</span></p>
+<p class="small muted">Or start from one of our demo places: <span id="chips"></span></p>
+</fieldset>
+<fieldset><legend>2. What?</legend>
+<div class="row seg" role="radiogroup" aria-label="Variable">
+<label><input type="radio" name="var" value="T" checked> Temperature</label>
+<label><input type="radio" name="var" value="P"> Rain</label>
+<label>Season <select id="season">{opts}</select></label></div>
+</fieldset>
+<fieldset><legend>3. When? <span class="muted small">(optional: a backtest)</span></legend>
+<label class="row"><input type="checkbox" id="usecut"> Pretend it is the end of <output id="cutout">2002</output>
+and use only the data that existed then</label>
+<input type="range" id="cut" min="1996" max="{max_cut}" value="2002" disabled aria-label="Cut-off year">
+<p class="small muted">Everything is rebuilt from that shorter record, baseline included. The chart then shows what
+happened next, and the forecast is scored against it.</p>
+</fieldset>
+<button type="submit" class="primary" id="run">Put it on trial</button>
+</form>
+<ol id="steps" class="steps" aria-live="polite" hidden></ol>
+<div id="out" hidden></div>
+<h2>What happens when you press the button</h2>
+<ol>
+<li>Your browser asks the NASA POWER API for monthly temperature and rain at your point.</li>
+<li>Each month is compared with its 1981–2010 average and averaged (or, for rain, totalled) over your season.</li>
+<li>The trend is measured with Sen's slope, the median slope between every pair of years.</li>
+<li>The trend line is removed and what is left, the natural ups and downs, is modelled. 1,000 new records are made
+from that model. None of them contains a trend.</li>
+<li>If the real trend is bigger than in 950, 990 or all 1,000 of them, the verdict says so. Otherwise it says
+"not yet". A second, different kind of imaginary history (IAAFT) is used as a cross-check.</li>
+<li>Optionally, the checker tests itself on your place: fake records with no trend should be flagged only about 5%
+of the time.</li>
+</ol>
+<p><a href="../method/">The full method, its checks and its limits</a>.</p>
 """

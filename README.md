@@ -11,6 +11,7 @@ In Greek myth, Cassandra gave true warnings that nobody believed. This project t
 putting the evidence on trial and publishing predictions before the outcome is known.
 
 - **Live site:** https://cassandra-signal-climate.vercel.app/ (mirror: https://propcgamer20-png.github.io/cassandra-signal/)
+- **Check any place yourself (live):** https://cassandra-signal-climate.vercel.app/check/
 - **Demo video (30 s):** [demo/cassandra-signal-demo.mp4](demo/cassandra-signal-demo.mp4)
 - Built for the NASA Space Apps Challenge. Not affiliated with or endorsed by NASA.
 
@@ -34,6 +35,24 @@ natural variation before the event, and we report that rather than hide it.
 **Is the test honest?** On 1,000 made-up 45-year series with no trend at all, the method flagged 5.6% (white
 noise), 4.8% (AR(1), φ = 0.3), 6.0% (AR(1), φ = 0.6) and 1.5% (skewed, rain-like noise) at p < 0.05. A fair test
 should flag about 5%. See [the method page](https://cassandra-signal-climate.vercel.app/method/#false-alarms).
+
+## Use it yourself
+
+The [live checker](https://cassandra-signal-climate.vercel.app/check/) runs the whole trial in your browser for any
+point on Earth: search a place, click the map or use your location, choose temperature or rain and a season, and
+press *Put it on trial*. Your browser fetches the NASA POWER record directly and runs the same method as the cards
+(in [cassandra/web/engine.js](cassandra/web/engine.js), in a background worker). You can also:
+
+- **backtest**: tick "pretend it is the end of …" and drag the year. Everything is rebuilt from the shorter record,
+  the chart shows what happened next, and the forecast for the following season is scored against reality;
+- **check the checker**: run 200 fake records with that place's own natural variability and no trend (a fair test
+  flags about 5%), and 200 with a real trend the size of the measured one (how often a change like it is caught);
+- **share or keep** the result: every result has a link that reproduces it exactly, plus JSON and CSV downloads.
+
+Every place card and every backtest has a button that opens the checker with its settings filled in.
+`tests/test_engine_js.py` runs the JavaScript engine under Node and checks it against the Python pipeline for all
+places: identical trends, anomalies, noise fits, SPI, forecasts and hindcast skill, and p-values within sampling noise
+(the two use different random number generators).
 
 ## The method in plain words
 
@@ -68,7 +87,7 @@ Python 3.11 or newer.
 pip install -r requirements.txt
 python build.py --places places.csv          # builds site/ from the cached data in data/raw/
 python build.py --places places.csv --refresh  # downloads fresh NASA data first
-python -m pytest -q                          # tests: anomaly maths, p-value, no future data, false alarms, forecasts
+python -m pytest -q                          # tests: anomaly maths, p-value, no future data, false alarms, forecasts, JS = Python
 python forecast.py issue                     # lock forecasts for the next season (never overwrites)
 python demo/make_video.py                    # needs: pip install imageio-ffmpeg
 ```
@@ -133,7 +152,7 @@ No NASA logos or branding are used.
 
 As required by the NASA Space Apps Challenge rules, we disclose AI use. The project idea, the method and its choices,
 and the review of the results are the team's. An AI coding assistant (a large language model) wrote most of the code
-(`cassandra/`, `build.py`, `forecast.py`, `demo/make_video.py`), the tests, the GitHub Actions workflow, this README
+(`cassandra/` including the browser checker in `cassandra/web/`, `build.py`, `forecast.py`, `demo/make_video.py`), the tests, the GitHub Actions workflow, this README
 and the wording of the website, working from the team's written brief. The team ran the pipeline, read the outputs and
 checked them against the brief. The charts, share cards and demo video are drawn by our code from NASA data; no image
 or video in this project was made by an image- or video-generating AI. The same note appears in the footer of every

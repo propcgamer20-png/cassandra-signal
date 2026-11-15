@@ -202,12 +202,41 @@ overflow:hidden;text-decoration:none;color:var(--ink)}.grid a.place:hover{border
 .bar{display:flex;height:22px;border-radius:5px;overflow:hidden;font-size:12px;color:#fff;min-width:220px}
 .bar span{display:flex;align-items:center;justify-content:center;white-space:nowrap}
 .b-below{background:#c27c2c}.b-near{background:#8a929c}.b-above{background:#2f7d6d}
+.cta{display:inline-block;background:var(--red);color:#fff;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none;margin:6px 0}
+.cta:hover{filter:brightness(1.08)}
+form#checker fieldset{border:0;padding:0;margin:0 0 18px;min-width:0}select{max-width:100%}.row label{flex-wrap:wrap;max-width:100%}form#checker legend{font-weight:700;font-size:17px;margin-bottom:8px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}.row label{display:flex;gap:6px;align-items:center}
+input[type=search],input[type=number],select,#sharelink{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:0}
+input[type=search]{flex:1 1 220px}input[type=number]{width:120px}#sharelink{flex:1 1 260px;font-size:13px}
+button{font:inherit;padding:8px 14px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--muted)}button:disabled{opacity:.55;cursor:wait}
+button.primary{background:var(--red);border-color:var(--red);color:#fff;font-weight:700;font-size:17px;padding:11px 22px}
+.chip{padding:4px 11px;border-radius:99px;font-size:14px;margin:2px}
+#results{list-style:none;padding:0;margin:4px 0}#results button{width:100%;text-align:left;border-radius:0;border-width:0 0 1px}
+#map{height:280px;border-radius:9px;border:1px solid var(--line);margin:8px 0;z-index:0}
+#placename{font-weight:600}input[type=range]{width:100%;max-width:420px}
+.seg label{border:1px solid var(--line);border-radius:7px;padding:7px 12px;cursor:pointer;background:var(--card)}
+.steps{padding-left:22px}.steps li{color:var(--muted);margin:3px 0}.steps li.now{color:var(--ink);font-weight:600}
+.steps li.now::after{content:" …"}.steps li.done{color:var(--ink)}.steps li.done::marker{content:"✓  "}
+.chartbox{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px;margin:12px 0}
+.chart-svg{width:100%;height:auto;display:block;font-family:inherit}
+.chart-svg .grid{stroke:#eceef1}.chart-svg .tick{fill:#5f6672;font-size:13px}.chart-svg .ref{stroke:#c9ccd1}
+.chart-svg .band{fill:#9aa1ab;opacity:.3}.chart-svg .hist{fill:none;stroke:#9aa1ab;stroke-width:.7;opacity:.25}
+.chart-svg .mid{fill:none;stroke:#9aa1ab;stroke-dasharray:5 4}.chart-svg .trend{fill:none;stroke:#1b1f24;stroke-dasharray:2 3}
+.chart-svg .real{fill:none;stroke-width:3;stroke:#1b1f24}.chart-svg .real.red{stroke:#c0392b}.chart-svg .real.amber{stroke:#d98200}
+.chart-svg .after{fill:none;stroke:#5f6672;stroke-width:2;stroke-dasharray:6 4}.chart-svg .cut{stroke:#5f6672;stroke-dasharray:3 3}
+.chart-svg .bar-null{fill:#9aa1ab}.chart-svg .realline{stroke:#1b1f24;stroke-width:3}.chart-svg .realline.red{stroke:#c0392b}
+.chart-svg .realline.amber{stroke:#d98200}.chart-svg .mirror{stroke:#5f6672;stroke-dasharray:3 3}
+.legend{color:#5f6672;margin:4px 6px}.key{display:inline-block;width:22px;height:0;border-top:3px solid #1b1f24;vertical-align:middle;margin:0 5px 0 12px}
+.key.red{border-color:#c0392b}.key.amber{border-color:#d98200}.band-key{height:10px;border:0;background:#9aa1ab;opacity:.45}
+.trend-key{border-top:2px dotted #1b1f24}.after-key{border-top:2px dashed #5f6672}
+.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;max-width:420px}.progress span{display:block;height:100%;background:var(--red);transition:width .2s}
 footer{max-width:960px;margin:0 auto;padding:22px 16px 40px;border-top:1px solid var(--line);
 color:var(--muted);font-size:14px}
 """
 
 
-def page(title, body, *, description="", og_image=None, url=None, root="../../"):
+def page(title, body, *, description="", og_image=None, url=None, root="../../", head_extra="", scripts=""):
     og = ""
     if og_image:
         og = (f'<meta property="og:type" content="website">'
@@ -223,11 +252,11 @@ def page(title, body, *, description="", og_image=None, url=None, root="../../")
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title><meta name="description" content="{esc(description)}">{og}
-<link rel="stylesheet" href="{root}style.css">
+<link rel="stylesheet" href="{root}style.css">{head_extra}
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23c0392b'/%3E%3C/svg%3E">
 </head><body>
 <header class="top"><a class="brand" href="{root}">CASSANDRA SIGNAL</a>
-<nav><a href="{root}">All places</a><a href="{root}method/">Method &amp; checks</a></nav></header>
+<nav><a href="{root}check/"><strong>Check any place</strong></a><a href="{root}">All places</a><a href="{root}method/">Method &amp; checks</a></nav></header>
 <main>{body}</main>
 <footer><p><strong>{FOOTER_DATA}.</strong> Sources:
 <a href="https://power.larc.nasa.gov/">NASA POWER</a> (monthly T2M and PRECTOTCORR, 1981 to present) and
@@ -237,5 +266,5 @@ Lenssen et al. 2019). This project is not affiliated with or endorsed by NASA.</
 AI coding assistant, then run, checked and tested by the team; the method follows the team's own design.
 Charts and cards are drawn by our code from the data; no image on this site is AI-generated.
 <a href="{root}method/#ai-use">Details</a>.</p>
-<p>No cookies, no tracking, no login. Built {{BUILD_INFO}}.</p></footer>
-</body></html>"""
+<p>No cookies, no tracking, no login. The live checker runs in your browser: it asks NASA POWER for the data directly, place search uses <a href="https://open-meteo.com/en/docs/geocoding-api">Open-Meteo</a> and the map uses <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> tiles; nothing is sent to us. Built {{BUILD_INFO}}.</p></footer>
+{scripts}</body></html>"""

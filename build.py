@@ -237,6 +237,37 @@ def main(argv=None):
                   description="How Cassandra Signal decides whether a change is real.", root="../")
     (out / "method" / "index.html").write_text(meth.replace("{BUILD_INFO}", build_info),
                                                encoding="utf-8", newline="\n")
+    # ---- the live checker: scripts, small data files and the page
+    (out / "js").mkdir()
+    for f in ("engine.js", "worker.js", "check.js"):
+        shutil.copy(ROOT / "cassandra" / "web" / f, out / "js" / f)
+    (out / "data").mkdir()
+    (out / "data" / "places.json").write_text(json.dumps(
+        [{k: p[k] for k in ("slug", "name", "lat", "lon", "t_season", "p_season", "primary")} for p in places],
+        ensure_ascii=False), encoding="utf-8", newline="\n")
+    from cassandra.data import ZONES
+    zones = [{"lo": lo, "hi": hi, "label": label,
+              "data": [[int(y), float(v)] for y, v in zon[["year", col]].dropna().itertuples(index=False)]}
+             for lo, hi, col, label in ZONES]
+    (out / "data" / "gistemp.json").write_text(json.dumps(
+        {"source": "NASA GISTEMP v4, annual means, deg C vs 1951-1980",
+         "global": [[int(y), float(v)] for y, v in glb.itertuples(index=False)], "zones": zones}),
+        encoding="utf-8", newline="\n")
+    max_cut = int(max(m.year.max() for m in monthly.values())) - 1
+    leaflet = ('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" '
+               'integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">')
+    scripts = ('<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" '
+               'integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>'
+               '<script defer src="../js/engine.js"></script><script defer src="../js/check.js"></script>')
+    (out / "check").mkdir()
+    chk = R.page("Check any place: Cassandra Signal", S.check_body(max_cut),
+                 description="Pick any place and season and put its NASA climate record on trial in your browser: "
+                             "1,000 imaginary histories, a verdict, a backtest and a self-check.",
+                 og_image=f"{base}place/{cards[0]['slug']}/card.png", url=f"{base}check/", root="../",
+                 head_extra=leaflet, scripts=scripts)
+    (out / "check" / "index.html").write_text(chk.replace("{BUILD_INFO}", build_info),
+                                              encoding="utf-8", newline="\n")
+
     missing = R.page("Page not found: Cassandra Signal",
                      '<h1>Page not found</h1><p>That page does not exist. '
                      f'<a href="{base}">See all places</a>.</p>',
