@@ -1,0 +1,141 @@
+# Cassandra Signal
+
+**Is the climate really changing where you live, or was that hot summer or dry year just natural variation?**
+
+Cassandra Signal puts each place's weather record on trial. It builds 1,000 imaginary histories of what the record
+could have looked like through natural ups and downs alone, and asks whether the real record stands out from all of
+them. Then it keeps an honest public track record: it reruns the test on past droughts and heatwaves using only the
+data available beforehand, and it locks in seasonal forecasts before each season starts.
+
+In Greek myth, Cassandra gave true warnings that nobody believed. This project tries to make warnings believable by
+putting the evidence on trial and publishing predictions before the outcome is known.
+
+- **Live site:** https://propcgamer20-png.github.io/cassandra-signal/
+- **Demo video (30 s):** [demo/cassandra-signal-demo.mp4](demo/cassandra-signal-demo.mp4)
+- Built for the NASA Space Apps Challenge. Not affiliated with or endorsed by NASA.
+
+## Current results
+
+| Place | Temperature | Rain | Backtests: would it have warned? |
+|---|---|---|---|
+| Mumbai, India | Mar–May: no alibi (+0.25 °C/decade) | Jun–Sep: probably real (+10.2 points of normal/decade, wetter) | 2009 monsoon failure: no (barely shows in the data) |
+| Cape Town water supply, South Africa | Dec–Feb: not yet (+0.12 °C/decade) | Apr–Sep: not yet | 'Day Zero' crisis, 2017: no |
+| Paris, France | Jun–Aug: very unlikely natural (+0.49 °C/decade) | Jun–Aug: not yet | 2003 heat wave: no · 2022 drought: no |
+| Sacramento, California, USA | Jun–Aug: not yet (+0.13 °C/decade) | Nov–Mar: not yet | 2013–14 drought winter: no |
+| Austin, Texas, USA | Jun–Aug: probably real (+0.34 °C/decade) | Year: not yet | 2011 heat: no · 2011 drought: no |
+| Garissa, Kenya | Year: probably real (+0.21 °C/decade) | Oct–Dec: not yet | 2011 long rains: no · Oct–Dec 2021: no (barely shows in the data) |
+| Niamey, Niger | Mar–May: no alibi (+0.39 °C/decade) | Jul–Sep: very unlikely natural (wetter) | 2024 Sahel heatwave: **warned** |
+| Wagga Wagga, Australia | Dec–Feb: not yet (+0.29 °C/decade) | Year: not yet | 2006 drought: no · Black Summer 2019–20: **warned** |
+
+Results as of the data cut-off of September 2026. The site is rebuilt from the data, so it is the source of truth;
+this table is a snapshot. Most backtests say "no": a 20–30 year record is often too short to separate a change from
+natural variation before the event, and we report that rather than hide it.
+
+**Is the test honest?** On 1,000 made-up 45-year series with no trend at all, the method flagged 5.6% (white
+noise), 4.8% (AR(1), φ = 0.3), 6.0% (AR(1), φ = 0.6) and 1.5% (skewed, rain-like noise) at p < 0.05. A fair test
+should flag about 5%. See [the method page](https://propcgamer20-png.github.io/cassandra-signal/method/#false-alarms).
+
+## The method in plain words
+
+1. **Prepare the record.** Download monthly temperature (T2M) and rain (PRECTOTCORR) for the place from NASA POWER,
+   1981 to the latest month. Temperature becomes an anomaly: each month minus that month's 1981–2010 average, then
+   averaged over the season being judged. Rain becomes a seasonal total, then a standardised precipitation index
+   (SPI, from a gamma distribution fitted to 1981–2010), and is shown as percent of normal.
+2. **Measure the trend.** Sen's slope: the median of the slopes between every pair of years, which one freak year
+   can't drag around. We also report the last 10 years minus the first 20.
+3. **Make 1,000 imaginary histories.** Remove the trend line; treat what is left as natural variability; fit an
+   AR(1) model to it (each year partly remembers the last); generate 1,000 trend-free series of the same length with
+   a fixed, recorded seed. Short records make the fitted model too calm, so we correct its memory and variance for
+   record length and let each history draw its own parameters from their uncertainty. Robustness checks: ARMA(p, q)
+   up to order 2 chosen by AIC, and IAAFT surrogates.
+4. **Give the verdict.** Count the imaginary histories whose trend is at least as big as the real one, in either
+   direction: p = (count + 1) / 1,001. Beyond all 1,000: *natural variation has no alibi*. Beyond 990: *very unlikely
+   to be natural variation alone*. Beyond 950: *probably a real change*. Otherwise: *not yet distinguishable from
+   natural variation*.
+5. **Check the checker.** Run steps 1–4 on thousands of made-up trend-free series. About 5% should be flagged.
+6. **Backtest.** For documented droughts and heatwaves ([events.csv](events.csv)), rerun everything with the data cut
+   off before the event, baseline included. A test proves no later data are used. We also check whether the event
+   even shows in the POWER data at that point.
+7. **Lock forecasts.** Before each season, write `forecasts/{place}/{year}-{season}.json` with the chances of a
+   below-, near- or above-normal season, commit it, and show the commit and SHA-256 on the card. Score it after the
+   season with the ranked probability score and Brier score against a 33/33/33 baseline, misses included.
+
+## Run it
+
+Python 3.11 or newer.
+
+```bash
+pip install -r requirements.txt
+python build.py --places places.csv          # builds site/ from the cached data in data/raw/
+python build.py --places places.csv --refresh  # downloads fresh NASA data first
+python -m pytest -q                          # tests: anomaly maths, p-value, no future data, false alarms, forecasts
+python forecast.py issue                     # lock forecasts for the next season (never overwrites)
+python demo/make_video.py                    # needs: pip install imageio-ffmpeg
+```
+
+Open `site/index.html` in a browser. The first build runs the false-alarm check (about 2 minutes); the result is
+cached in `data/falsealarm.json` and recomputed whenever the statistics code changes.
+
+### Add a place
+
+Add a row to [places.csv](places.csv):
+
+| column | meaning |
+|---|---|
+| `slug` | short name used in the URL, e.g. `lima` |
+| `name`, `lat`, `lon` | place name and coordinates (decimal degrees) |
+| `t_season`, `p_season` | season to judge for temperature and rain: month initials (`JJA`, `DJF`, `OND`, `AMJJAS`) or `ANN` |
+| `primary` | `T` or `P`: which variable leads the card |
+| `notes` | one or two sentences shown on the page |
+
+Optionally add documented events to [events.csv](events.csv) (`kind` is `heat`, `drought`, `flood` or `cold`, with a
+source link). Then run `python build.py --places places.csv` and commit `data/raw/` so the build stays reproducible.
+
+### Deployment
+
+[.github/workflows/site.yml](.github/workflows/site.yml) runs the tests, builds the site and deploys it to GitHub
+Pages on every push. On the 10th of each month it also refreshes the NASA data, locks the next season's forecasts when
+the season starts within 25 days, commits them, and scores any finished seasons. No server, no login, no tracking.
+
+## Data and citations
+
+- **NASA POWER** (Prediction Of Worldwide Energy Resources), NASA Langley Research Center. Monthly point API,
+  community AG, parameters T2M and PRECTOTCORR: https://power.larc.nasa.gov/ . Raw responses are cached unchanged in
+  `data/raw/`.
+- **GISTEMP Team**, GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies:
+  https://data.giss.nasa.gov/gistemp/ . Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy and
+  D. Zyss (2019), Improvements in the GISTEMP uncertainty model, *J. Geophys. Res. Atmos.*, 124, 6307–6326.
+- Event descriptions link to their sources in [events.csv](events.csv).
+
+No NASA logos or branding are used.
+
+## Limitations
+
+- **Short records.** POWER starts in 1981, so each test has about 45 seasons. In our check, a trend of a quarter of a
+  standard deviation per decade was caught only 30% of the time; half a standard deviation, 78%. "Not yet" often
+  means "not enough data yet", not "no change".
+- **Not a weather station.** POWER is a reanalysis and satellite-based estimate on a grid of roughly half a degree.
+  The cell over central Cape Town shows no 2017 drought at all, so that card uses the Theewaterskloof Dam catchment
+  that actually ran dry. Some backtests are marked "barely shows in this dataset" for the same reason.
+- **Signal is not cause.** A significant trend shows a change beyond natural variation as we modelled it. On its own
+  it does not prove what caused it.
+- **Rain is noisier than temperature**, so expect more "not yet" verdicts for rain.
+- **The noise model is a model.** Very slow natural swings (multi-decade ocean cycles) may be longer than the record
+  and are not fully represented.
+- **Many tests.** With 16 series, about one could be amber by chance alone.
+- **Forecasts are simple** (climatology shifted along the trend). Hindcast skill is positive where there is a strong
+  trend and about zero or slightly negative where there isn't; the cards show both.
+
+## AI use
+
+As required by the NASA Space Apps Challenge rules, we disclose AI use. The project idea, the method and its choices,
+and the review of the results are the team's. An AI coding assistant (a large language model) wrote most of the code
+(`cassandra/`, `build.py`, `forecast.py`, `demo/make_video.py`), the tests, the GitHub Actions workflow, this README
+and the wording of the website, working from the team's written brief. The team ran the pipeline, read the outputs and
+checked them against the brief. The charts, share cards and demo video are drawn by our code from NASA data; no image
+or video in this project was made by an image- or video-generating AI. The same note appears in the footer of every
+page and on every card.
+
+## Licence
+
+Code: MIT (see [LICENSE](LICENSE)). NASA data are used under NASA's open data policy.

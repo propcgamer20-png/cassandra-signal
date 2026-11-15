@@ -1,0 +1,63 @@
+{
+  "schema": "cassandra-signal/forecast/v1",
+  "place": {
+    "slug": "sacramento",
+    "name": "Sacramento, California, USA",
+    "lat": 38.582,
+    "lon": -121.494
+  },
+  "season": "DJF",
+  "season_months": "Dec-Feb",
+  "target_year": 2027,
+  "season_starts": "2026-12-01",
+  "issued_at_utc": "2026-11-15T18:51:59Z",
+  "categories": "below / near / above the middle third of 1981-2010 seasons",
+  "method": "Trend-shifted climatology: tercile edges from the 1981-2010 seasons; the season's value is predicted from the Sen's-slope trend line fitted to all complete seasons before the cut-off, with a normal spread equal to the scatter around that line (prediction-interval widened). Precipitation is handled as SPI (gamma fit on 1981-2010). Each category is kept at 2% or more.",
+  "data": "NASA POWER monthly T2M and PRECTOTCORR",
+  "variables": {
+    "T": {
+      "variable": "T",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+        "below": 0.161,
+        "near": 0.206,
+        "above": 0.633
+      },
+      "tercile_edges": [
+        8.787,
+        9.383
+      ],
+      "unit": "°C",
+      "baseline": [
+        1982,
+        2010
+      ],
+      "trend_centre": 9.697,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+    },
+    "P": {
+      "variable": "P",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+        "below": 0.4,
+        "near": 0.305,
+        "above": 0.295
+      },
+      "tercile_edges": [
+        266.857,
+        381.99
+      ],
+      "unit": "mm",
+      "baseline": [
+        1982,
+        2010
+      ],
+      "trend_centre": 300.653,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+    }
+  }
+}

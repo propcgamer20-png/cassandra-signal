@@ -1,0 +1,63 @@
+{
+  "schema": "cassandra-signal/forecast/v1",
+  "place": {
+    "slug": "garissa",
+    "name": "Garissa, Kenya",
+    "lat": -0.453,
+    "lon": 39.646
+  },
+  "season": "DJF",
+  "season_months": "Dec-Feb",
+  "target_year": 2027,
+  "season_starts": "2026-12-01",
+  "issued_at_utc": "2026-11-15T18:51:59Z",
+  "categories": "below / near / above the middle third of 1981-2010 seasons",
+  "method": "Trend-shifted climatology: tercile edges from the 1981-2010 seasons; the season's value is predicted from the Sen's-slope trend line fitted to all complete seasons before the cut-off, with a normal spread equal to the scatter around that line (prediction-interval widened). Precipitation is handled as SPI (gamma fit on 1981-2010). Each category is kept at 2% or more.",
+  "data": "NASA POWER monthly T2M and PRECTOTCORR",
+  "variables": {
+    "T": {
+      "variable": "T",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+        "below": 0.109,
+        "near": 0.114,
+        "above": 0.777
+      },
+      "tercile_edges": [
+        28.482,
+        28.903
+      ],
+      "unit": "°C",
+      "baseline": [
+        1982,
+        2010
+      ],
+      "trend_centre": 29.587,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+    },
+    "P": {
+      "variable": "P",
+      "season": "DJF",
+      "target_year": 2027,
+      "probabilities": {
+        "below": 0.548,
+        "near": 0.217,
+        "above": 0.235
+      },
+      "tercile_edges": [
+        64.093,
+        102.687
+      ],
+      "unit": "mm",
+      "baseline": [
+        1982,
+        2010
+      ],
+      "trend_centre": 57.764,
+      "seasons_used": 45,
+      "data_cutoff": "2026-09"
+    }
+  }
+}

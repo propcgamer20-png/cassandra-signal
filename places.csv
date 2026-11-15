@@ -1,0 +1,9 @@
+slug,name,lat,lon,t_season,p_season,primary,notes
+mumbai,"Mumbai, India",19.076,72.878,MAM,JJAS,T,Coastal megacity; pre-monsoon heat (Mar-May) and the Jun-Sep monsoon that fills its lakes.
+cape-town,"Cape Town water supply, South Africa",-34.08,19.28,DJF,AMJJAS,P,"Theewaterskloof Dam catchment, the largest source of Cape Town's water, about 70 km east of the city. The POWER cell over the city itself shows no 2017 drought, so we judge the catchment that ran dry."
+paris,"Paris, France",48.857,2.352,JJA,JJA,T,Temperate European capital; summer heat and summer rain.
+sacramento,"Sacramento, California, USA",38.582,-121.494,JJA,NDJFM,P,Central Valley farm country; almost all rain falls Nov-Mar.
+austin,"Austin, Texas, USA",30.267,-97.743,JJA,ANN,T,Hot humid subtropics; 2011 brought the hottest summer and driest year on record in Texas.
+garissa,"Garissa, Kenya",-0.453,39.646,ANN,OND,P,Pastoral drylands of the Horn of Africa; two short rainy seasons a year.
+niamey,"Niamey, Niger",13.512,2.112,MAM,JAS,T,"Sahel city; the hottest months come before the Jul-Sep rains."
+wagga-wagga,"Wagga Wagga, Australia",-35.118,147.369,DJF,ANN,P,Murray-Darling Basin wheat and sheep country.

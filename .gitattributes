@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.mp4 binary
+# Locked forecasts and raw data must stay byte-for-byte identical (SHA-256).
+forecasts/** -text
+data/raw/** -text

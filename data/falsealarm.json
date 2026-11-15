@@ -1,0 +1,95 @@
+{
+ "key": "fe328361effa3d9c",
+ "rows": [
+  {
+   "case": "white",
+   "description": "White noise (no memory)",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 56,
+   "rate": 0.056,
+   "ci95": [
+    0.043375,
+    0.072024
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.383367
+  },
+  {
+   "case": "ar1_03",
+   "description": "AR(1) noise, lag-1 correlation 0.3",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 48,
+   "rate": 0.048,
+   "ci95": [
+    0.036393,
+    0.063066
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.82783
+  },
+  {
+   "case": "ar1_06",
+   "description": "AR(1) noise, lag-1 correlation 0.6 (strong memory)",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 60,
+   "rate": 0.06,
+   "ci95": [
+    0.046896,
+    0.076471
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.146547
+  },
+  {
+   "case": "skewed",
+   "description": "Skewed noise like rainfall (gamma, shape 2)",
+   "trend_sd_per_decade": 0.0,
+   "n_series": 1000,
+   "years": 45,
+   "flagged": 15,
+   "rate": 0.015,
+   "ci95": [
+    0.009111,
+    0.024601
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.0
+  },
+  {
+   "case": "ar1_03",
+   "description": "AR(1) noise, lag-1 correlation 0.3",
+   "trend_sd_per_decade": 0.25,
+   "n_series": 500,
+   "years": 45,
+   "flagged": 149,
+   "rate": 0.298,
+   "ci95": [
+    0.259573,
+    0.339508
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.0
+  },
+  {
+   "case": "ar1_03",
+   "description": "AR(1) noise, lag-1 correlation 0.3",
+   "trend_sd_per_decade": 0.5,
+   "n_series": 500,
+   "years": 45,
+   "flagged": 392,
+   "rate": 0.784,
+   "ci95": [
+    0.745836,
+    0.817833
+   ],
+   "alpha": 0.05,
+   "binom_p_vs_alpha": 0.0
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 06:17 UTC on the 10th of each month: refresh NASA data, lock the next
+    # season's forecasts (seasons start 1 Dec, Mar, Jun, Sep), score finished ones.
+    - cron: "17 6 10 * *"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history: the site shows when each forecast was committed
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Refresh data and lock the next season's forecasts
+        if: github.event_name != 'push'
+        run: |
+          python build.py --fetch-only --refresh
+          python forecast.py issue --within-days 25
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw forecasts
+          if ! git diff --cached --quiet; then
+            git commit -m "Monthly NASA data refresh and forecast lock"
+            git push
+          fi
+
+      - name: Tests
+        run: python -m pytest -q
+
+      - name: Build site
+        run: python build.py --places places.csv
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
