@@ -53,6 +53,11 @@ def fetch_power(slug: str, lat: float, lon: float, raw_dir: Path, refresh: bool 
             text = _get(POWER_URL.format(lat=lat, lon=lon, year=y))
             raw = json.loads(text)
             if "properties" in raw:
+                if path.exists():
+                    old = json.loads(path.read_text(encoding="utf-8"))
+                    if (old.get("properties") == raw["properties"]
+                            and old.get("geometry") == raw.get("geometry")):
+                        return old  # same data; keep the file so git sees no change
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(text, encoding="utf-8", newline="\n")
                 return raw
