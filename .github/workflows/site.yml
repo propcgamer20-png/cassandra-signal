@@ -52,6 +52,23 @@ jobs:
       - name: Build site
         run: python build.py --places places.csv
 
+      - name: Build the Vercel copy (same data, share links point at Vercel)
+        run: python build.py --places places.csv --out site-vercel --base-url "$VERCEL_URL"
+        env:
+          VERCEL_URL: https://cassandra-signal-climate.vercel.app/
+
+      - name: Publish the Vercel copy to the vercel-site branch (Vercel deploys it, no build)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cp vercel.json site-vercel/vercel.json
+          cd site-vercel
+          git init -q -b vercel-site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Built site from ${GITHUB_SHA::7}"
+          git push -f -q "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" vercel-site
+
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site

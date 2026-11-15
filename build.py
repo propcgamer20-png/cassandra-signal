@@ -237,6 +237,12 @@ def main(argv=None):
                   description="How Cassandra Signal decides whether a change is real.", root="../")
     (out / "method" / "index.html").write_text(meth.replace("{BUILD_INFO}", build_info),
                                                encoding="utf-8", newline="\n")
+    missing = R.page("Page not found: Cassandra Signal",
+                     '<h1>Page not found</h1><p>That page does not exist. '
+                     f'<a href="{base}">See all places</a>.</p>',
+                     description="Page not found.", root=base)
+    (out / "404.html").write_text(missing.replace("{BUILD_INFO}", build_info),
+                                  encoding="utf-8", newline="\n")
     (out / "summary.json").write_text(json.dumps(jsonable({"places": summary, "false_alarm": fa_rows}),
                                                  indent=1, ensure_ascii=False) + "\n",
                                       encoding="utf-8", newline="\n")
