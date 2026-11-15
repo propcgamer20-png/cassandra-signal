@@ -136,7 +136,9 @@
     s += '<path class="trend" d="' + path(ty, ty.map(function (y) { return ic + b * y; })) + '"/>';
     if (after.years.length) {
       s += '<line class="cut" x1="' + X(a.years[a.years.length - 1] + 0.5) + '" x2="' + X(a.years[a.years.length - 1] + 0.5) + '" y1="' + m.t + '" y2="' + (H - m.b) + '"/>';
-      s += '<text class="tick" x="' + (X(a.years[a.years.length - 1] + 0.5) + 6) + '" y="' + (m.t + 12) + '">what happened next →</text>';
+      var cx = X(a.years[a.years.length - 1] + 0.5), nearEdge = cx > W * 0.68;
+      s += '<text class="tick" x="' + (nearEdge ? cx - 6 : cx + 6) + '" y="' + (m.t + 12) + '" text-anchor="' + (nearEdge ? 'end' : 'start') + '">' +
+        (nearEdge ? 'cut-off · what happened next →' : 'what happened next →') + '</text>';
       s += '<path class="after" d="' + path([a.years[a.years.length - 1]].concat(after.years), [a.plot[a.plot.length - 1]].concat(after.plot)) + '"/>';
     }
     s += '<path class="real ' + r.verdict.colour + '" d="' + path(a.years, a.plot) + '"/>';
